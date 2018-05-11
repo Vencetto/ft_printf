@@ -12,7 +12,16 @@
 
 #include "../includes/ft_printf.h"
 
-put_flags(char **s, t_opt *flags)
+void	put_flags(char **s, t_opt *flags)
 {
-	;
+	if (*s == ' ')
+		flags->space = 1;
+	else if (*s == '-')
+		flags->minus = 1;
+	else if (*s == '+')
+		flags->plus = 1;
+	else if (*s == '#')
+		flags->sharp = 1;
+	else if (*s == '0')
+		flags->zero = 1;
 }
