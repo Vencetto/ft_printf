@@ -12,55 +12,49 @@
 
 #include "../includes/ft_printf.h"
 
-// void	some_funk(char c, va_list ap)
-// {
-// 	if (c == 'c')
-// 		ft_putchar(va_arg(ap, int));
-// 	else if (c == 's')
-// 		ft_putstr(va_arg(ap, char*));
-// 	else if (c == 'd')
-// 		ft_putnbr(va_arg(ap, int));
-// }
-
-int		searcher(char **str, int i, va_list ap)
+int		checking(char *str)
 {
-	char	*buff = NULL;
-	int		k;
-	char	*point;
+	if (ft_strchr((const char *)str, '%'))
+		return (0);
+	else
+		write(1, str, ft_strlen(str));
+	return (1);
+}
 
-	k = 0;
-	point = *str;
-	while (str)
+void	set_all_zero(t_opt *flags)
+{
+	flags->defis = 0;
+	flags->plus = 0;
+	flags->space = 0;
+	flags->sharp = 0;
+	flags->zero = 0;
+	flags->sp_type = '0';
+}
+
+void	search_for_flags(char **s, t_opt *flags)
+{
+	while (*s)
 	{
-		if (*str == 's' || *str == 'S' || *str == 'p' || *str == 'd' ||
-			*str == 'D' || *str == 'i' || *str == 'o' || *str == 'O' ||
-			*str == 'u' || *str == 'U' || *str == 'x' || *str == 'X' ||
-			*str == 'c' || *str == 'C')
-		{
-			// some_funk(str[i], ap);
-			return (i);
-		}
-		else
-			//buff[k++] = str[i];
-		str++;
+		if (*s == ' ' || *s == '-' || *s == '+' || *s == '#' || *s == '0')
+			put_flags(**s, &flags);
 	}
-	return (i);
 }
 
 int		parser(va_list ap, char *str)
 {
 	int		i;
+	t_opt	flags;
 
+	set_all_zero(&flags);
 	i = 0;
 	while (str[i])
 	{
 		if (str[i] == '%')
-			i = searcher(&str, i + 1, ap);
-		else
-			// write(1, &str[i], 1);
+		{
+			search_for_flags(&str, &flags);
+		}
 		i++;
 	}
-	return (i);
 }
 
 int		ft_printf(const char *format, ...)
@@ -70,9 +64,14 @@ int		ft_printf(const char *format, ...)
 
 	if (format)
 	{
-		va_start(ap, format);
-		res = parser(ap, (char *)format);
-		va_end(ap);
+		if (checking((char *)format))
+			return (ft_strlen(format));
+		else
+		{
+			va_start(ap, format);
+			res = parser(ap, (char *)format);
+			va_end(ap);
+		}
 	}
-	return (res);
+	return (0);
 }
