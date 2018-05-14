@@ -25,13 +25,17 @@ typedef struct	s_opt
 	int			space;
 	int			sharp;
 	int			zero;
-	char		sp_type;
+	int			precision;
+	char		sp_type; // ти специфікатора
 }				t_opt;
 
 int		ft_printf(const char *format, ...);
 int		checking(char *str);
+void	search_for_flags(char *s, t_opt *flags);
 int		parser(va_list ap, char *str);
 void	set_all_zero(t_opt *flags);
+void	put_flags(char c, t_opt *flags);
+void	put_precision(int c, t_opt *flags);
 
-
+void	show_structure(t_opt *flags);
 #endif

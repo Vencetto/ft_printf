@@ -31,12 +31,15 @@ void	set_all_zero(t_opt *flags)
 	flags->sp_type = '0';
 }
 
-void	search_for_flags(char **s, t_opt *flags)
+void	search_for_flags(char *s, t_opt *flags)
 {
 	while (*s)
 	{
 		if (*s == ' ' || *s == '-' || *s == '+' || *s == '#' || *s == '0')
-			put_flags(**s, &flags);
+			put_flags(*s, flags);
+		if (*s == '.')
+			put_precision(*(s + 1), flags);
+		s++;
 	}
 }
 
@@ -44,17 +47,19 @@ int		parser(va_list ap, char *str)
 {
 	int		i;
 	t_opt	flags;
-
+													(void)ap;
 	set_all_zero(&flags);
 	i = 0;
 	while (str[i])
 	{
 		if (str[i] == '%')
 		{
-			search_for_flags(&str, &flags);
+			search_for_flags(&str[i + 1], &flags);
 		}
 		i++;
 	}
+	show_structure(&flags);
+	return (i);
 }
 
 int		ft_printf(const char *format, ...)
