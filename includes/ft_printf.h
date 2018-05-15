@@ -20,22 +20,28 @@
 
 typedef struct	s_opt
 {
-	int			defis;
+	int			minus;
 	int			plus;
 	int			space;
 	int			sharp;
 	int			zero;
 	int			precision;
-	char		sp_type; // ти специфікатора
+	int			width;
+	char		modif;
+	char		sp_type;
 }				t_opt;
 
 int		ft_printf(const char *format, ...);
 int		checking(char *str);
-void	search_for_flags(char *s, t_opt *flags);
+int		search_for_flags(char *s, t_opt *flags);
 int		parser(va_list ap, char *str);
 void	set_all_zero(t_opt *flags);
 void	put_flags(char c, t_opt *flags);
 void	put_precision(int c, t_opt *flags);
+void	put_width(int c, t_opt *flags);
+void	put_specificator(char c, t_opt *flags);
+int		put_modificator(char c, char s, t_opt *flags);
+void	di_executor(t_opt *flags);
 
 void	show_structure(t_opt *flags);
 #endif

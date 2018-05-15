@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   put_into_struct.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vzomber <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/03 13:46:26 by vzomber           #+#    #+#             */
-/*   Updated: 2018/05/03 13:46:28 by vzomber          ###   ########.fr       */
+/*   Created: 2018/05/15 17:11:28 by vzomber           #+#    #+#             */
+/*   Updated: 2018/05/15 17:11:31 by vzomber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	put_flags(char c, t_opt *flags)
 	if (c == ' ')
 		flags->space = 1;
 	else if (c == '-')
-		flags->defis = 1;
+		flags->minus = 1;
 	else if (c == '+')
 		flags->plus = 1;
 	else if (c == '#')
@@ -32,14 +32,42 @@ void	put_precision(int c, t_opt *flags)
 		flags->precision = c - '0';
 }
 
-void	show_structure(t_opt *flags)
+void	put_width(int c, t_opt *flags)
 {
-	printf("\nStructure-------\n");
-	printf("flags->defis: %d\n", flags->defis);
-	printf("flags->plus:  %d\n", flags->plus);
-	printf("flags->space: %d\n", flags->space);
-	printf("flags->sharp: %d\n", flags->sharp);
-	printf("flags->zero:  %d\n", flags->zero);
-	printf("precision:    %d\n", flags->precision);
-	printf("----------------\n\n");
+	if (c >= '0' && c <= '9')
+		flags->width = c - '0';
+}
+
+void	put_specificator(char c, t_opt *flags)
+{
+	flags->sp_type = c;
+}
+
+int		put_modificator(char c, char s, t_opt *flags)
+{
+	if (c == 'h')
+	{
+		if (s == 'h')
+		{
+			flags->modif = 'H';
+			return (1);
+		}
+		else
+			flags->modif = 'h';
+	}
+	else if (c == 'l')
+	{
+		if (s == 'l')
+		{
+			flags->modif = 'L';
+			return (1);
+		}
+		else
+			flags->modif = 'l';
+	}
+	else if (c == 'j')
+		flags->modif = 'j';
+	else if (c == 'z')
+		flags->modif = 'z';
+	return (0);
 }

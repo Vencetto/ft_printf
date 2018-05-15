@@ -23,39 +23,64 @@ int		checking(char *str)
 
 void	set_all_zero(t_opt *flags)
 {
-	flags->defis = 0;
+	flags->minus = 0;
 	flags->plus = 0;
 	flags->space = 0;
 	flags->sharp = 0;
 	flags->zero = 0;
+	flags->precision = 0;
+	flags->width = 0;
 	flags->sp_type = '0';
 }
 
-void	search_for_flags(char *s, t_opt *flags)
+int		search_for_flags(char *s, t_opt *flags)
 {
+	int i;
+
+	i = 0;
 	while (*s)
 	{
 		if (*s == ' ' || *s == '-' || *s == '+' || *s == '#' || *s == '0')
 			put_flags(*s, flags);
 		if (*s == '.')
+		{
 			put_precision(*(s + 1), flags);
+			put_width(*(s - 1), flags);
+		}
+		if (*s == 'h' | *s == 'l' || *s == 'j' || *s == 'z')
+			(put_modificator(*s, *(s + 1), flags) ? (s++ && i++) : 0);
+		if (*s == 's' || *s == 'S' || *s == 'p' || *s == 'd' || *s == 'D' ||
+			*s == 'i' || *s == 'o' || *s == 'O' || *s == 'u' || *s == 'U' ||
+			*s == 'x' || *s == 'X' || *s == 'c' || *s == 'C')
+		{
+			put_specificator(*s, flags);
+			return (i);
+		}
 		s++;
+		i++;
 	}
+	return (i);
 }
 
 int		parser(va_list ap, char *str)
 {
-	int		i;
 	t_opt	flags;
+	int		i;
 													(void)ap;
-	set_all_zero(&flags);
 	i = 0;
 	while (str[i])
 	{
 		if (str[i] == '%')
 		{
-			search_for_flags(&str[i + 1], &flags);
+			if (str[i + 1] == '%')
+			{
+				write(1, "%", 1);
+				i += 2;
+			}
+			set_all_zero(&flags);
+			i = search_for_flags(&str[i + 1], &flags) - 1;
 		}
+		executor(&flags);
 		i++;
 	}
 	show_structure(&flags);
