@@ -54,7 +54,7 @@ int		search_for_flags(char *s, t_opt *flags)
 			*s == 'x' || *s == 'X' || *s == 'c' || *s == 'C')
 		{
 			put_specificator(*s, flags);
-			return (i);
+			return (i + 1);
 		}
 		s++;
 		i++;
@@ -66,7 +66,7 @@ int		parser(va_list ap, char *str)
 {
 	t_opt	flags;
 	int		i;
-													(void)ap;
+
 	i = 0;
 	while (str[i])
 	{
@@ -77,10 +77,15 @@ int		parser(va_list ap, char *str)
 				write(1, "%", 1);
 				i += 2;
 			}
-			set_all_zero(&flags);
-			i = search_for_flags(&str[i + 1], &flags) - 1;
+			else
+			{
+				set_all_zero(&flags);
+				i += search_for_flags(&str[i + 1], &flags);
+				executor(&flags, ap);
+			}
 		}
-		executor(&flags);
+		else
+			write(1, &str[i], 1);
 		i++;
 	}
 	show_structure(&flags);

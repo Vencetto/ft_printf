@@ -41,7 +41,8 @@ void	put_precision(int c, t_opt *flags);
 void	put_width(int c, t_opt *flags);
 void	put_specificator(char c, t_opt *flags);
 int		put_modificator(char c, char s, t_opt *flags);
-void	di_executor(t_opt *flags);
+void	executor(t_opt *flags, va_list ap);
+void	Did_executor(t_opt *flags, va_list ap);
 
 void	show_structure(t_opt *flags);
 #endif
