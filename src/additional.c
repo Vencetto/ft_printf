@@ -12,6 +12,19 @@
 
 #include "../includes/ft_printf.h"
 
+void	set_all_zero(t_opt *flags)
+{
+	flags->minus = 0;
+	flags->plus = 0;
+	flags->space = 0;
+	flags->sharp = 0;
+	flags->zero = 0;
+	flags->precision = 0;
+	flags->width = 0;
+	flags->modif = '0';
+	flags->sp_type = '0';
+}
+
 void	show_structure(t_opt *flags)
 {
 	printf("\nStructure---\n");

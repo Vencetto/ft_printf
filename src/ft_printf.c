@@ -12,54 +12,41 @@
 
 #include "../includes/ft_printf.h"
 
-int		checking(char *str)
+char	*search_helper(char *s, t_opt *flags)
 {
-	if (ft_strchr((const char *)str, '%'))
-		return (0);
-	else
-		write(1, str, ft_strlen(str));
-	return (1);
+	while (s)
+	{
+		if (*s >= '0' && *s <= '9')
+			s = put_width(s, flags);
+		else if (*s == '.')
+			s = put_precision(s + 1, flags);
+		if (!(*(s + 1) >= '0' && *(s + 1) <= '9'))
+			return (s);
+		s++;
+	}
+	return (s);
 }
 
-void	set_all_zero(t_opt *flags)
+char	*search_for_flags(char *s, t_opt *flags)
 {
-	flags->minus = 0;
-	flags->plus = 0;
-	flags->space = 0;
-	flags->sharp = 0;
-	flags->zero = 0;
-	flags->precision = 0;
-	flags->width = 0;
-	flags->sp_type = '0';
-}
-
-int		search_for_flags(char *s, t_opt *flags)
-{
-	int i;
-
-	i = 0;
-	while (*s)
+	while (s)
 	{
 		if (*s == ' ' || *s == '-' || *s == '+' || *s == '#' || *s == '0')
 			put_flags(*s, flags);
-		if (*s == '.')
-		{
-			put_precision(*(s + 1), flags);
-			put_width(*(s - 1), flags);
-		}
-		if (*s == 'h' | *s == 'l' || *s == 'j' || *s == 'z')
-			(put_modificator(*s, *(s + 1), flags) ? (s++ && i++) : 0);
-		if (*s == 's' || *s == 'S' || *s == 'p' || *s == 'd' || *s == 'D' ||
+		else if (*s == '.' || (*s >= '0' && *s <= '9'))
+			s = search_helper(s, flags);
+		else if (*s == 'h' | *s == 'l' || *s == 'j' || *s == 'z')
+			(put_modificator(*s, *(s + 1), flags) ? s++ : 0);
+		else if (*s == 's' || *s == 'S' || *s == 'p' || *s == 'd' || *s == 'D' ||
 			*s == 'i' || *s == 'o' || *s == 'O' || *s == 'u' || *s == 'U' ||
 			*s == 'x' || *s == 'X' || *s == 'c' || *s == 'C')
 		{
-			put_specificator(*s, flags);
-			return (i + 1);
+			flags->sp_type = *s;
+			return (s + 1);
 		}
 		s++;
-		i++;
 	}
-	return (i);
+	return (s);
 }
 
 int		parser(va_list ap, char *str)
@@ -67,29 +54,43 @@ int		parser(va_list ap, char *str)
 	t_opt	flags;
 	int		i;
 
+	(void)ap;
 	i = 0;
-	while (str[i])
+	while (*str)
 	{
-		if (str[i] == '%')
+		if (*str == '%')
 		{
-			if (str[i + 1] == '%')
+			if (*(str + 1) == '%')
 			{
 				write(1, "%", 1);
-				i += 2;
+				str = str + 2;
+				i++;
 			}
 			else
 			{
 				set_all_zero(&flags);
-				i += search_for_flags(&str[i + 1], &flags);
-				executor(&flags, ap);
+				str = search_for_flags(str + 1, &flags);
+				// executor(&flags, ap);
 			}
 		}
 		else
-			write(1, &str[i], 1);
-		i++;
+		{
+			write(1, str, 1);
+			i++;
+		}
+		str++;
 	}
 	show_structure(&flags);
 	return (i);
+}
+
+int		checking(char *str)
+{
+	if (ft_strchr((const char *)str, '%'))
+		return (0);
+	else
+		write(1, str, ft_strlen(str));
+	return (1);
 }
 
 int		ft_printf(const char *format, ...)

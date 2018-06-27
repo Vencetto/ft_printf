@@ -26,21 +26,39 @@ void	put_flags(char c, t_opt *flags)
 		flags->zero = 1;
 }
 
-void	put_precision(int c, t_opt *flags)
+char	*put_precision(char *s, t_opt *flags)
 {
-	if (c >= '0' && c <= '9')
-		flags->precision = c - '0';
+	int nb;
+	int len;
+
+	len = ft_strlen(s);
+	nb = ft_atoi(s);
+	flags->precision = nb;
+	return (s);// + len);
 }
 
-void	put_width(int c, t_opt *flags)
+char	*put_width(char *s, t_opt *flags)
 {
-	if (c >= '0' && c <= '9')
-		flags->width = c - '0';
-}
-
-void	put_specificator(char c, t_opt *flags)
-{
-	flags->sp_type = c;
+	// int		nb;
+	// int		len;
+	// char	*str;
+	// char	*tmp;
+	(void)flags;
+	// len = 0;
+	// while (*s >= '0' && *s <= '9')
+	// {
+	// 	len++;
+	// 	s++;
+	// }
+	// printf("len: %d", len);
+	// tmp = ft_strnew(len);
+	// str = ft_strnew(len);
+	// str = ft_strncpy(tmp, s, len);
+	// nb = ft_atoi(str);
+	// flags->width = nb;
+	// free(tmp);
+	// free(str);
+	return (s);
 }
 
 int		put_modificator(char c, char s, t_opt *flags)
