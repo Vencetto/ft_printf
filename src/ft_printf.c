@@ -39,11 +39,11 @@ char	*search_for_flags(char *s, t_opt *flags)
 	{
 		if (*s == ' ' || *s == '-' || *s == '+' || *s == '#' || *s == '0')
 			put_flags(*s, flags);
-		else if (*s == '.' || (*s >= '0' && *s <= '9'))
+		if (*s == '.' || (*s >= '0' && *s <= '9'))
 			s = search_helper(s, flags);
-		else if (*s == 'h' | *s == 'l' || *s == 'j' || *s == 'z')
+		if (*s == 'h' | *s == 'l' || *s == 'j' || *s == 'z')
 			(put_modificator(*s, *(s + 1), flags) ? s++ : 0);
-		else if (*s == 's' || *s == 'S' || *s == 'p' || *s == 'd' || *s == 'D' ||
+		if (*s == 's' || *s == 'S' || *s == 'p' || *s == 'd' || *s == 'D' ||
 			*s == 'i' || *s == 'o' || *s == 'O' || *s == 'u' || *s == 'U' ||
 			*s == 'x' || *s == 'X' || *s == 'c' || *s == 'C' || *s == '%')
 		{
@@ -61,23 +61,14 @@ int		parser(va_list ap, char *str)
 	int		i;
 
 	i = 0;
-	flags = *(t_opt *)malloc(sizeof(t_opt));
 	while (*str)
 	{
 		if (*str == '%')
 		{
-			if (*(str + 1) == '%')
-			{
-				write(1, "%", 1);
-				i++;
-				str++;
-			}
-			else
-			{
-				set_all_zero(&flags);
-				str = search_for_flags(str + 1, &flags);
-				i += executor(&flags, ap);
-			}
+			set_all_zero(&flags);
+			str = search_for_flags(str + 1, &flags);
+			i += executor(&flags, ap);
+			// show_structure(&flags);
 		}
 		else
 		{
@@ -86,17 +77,7 @@ int		parser(va_list ap, char *str)
 		}
 		str++;
 	}
-	// show_structure(&flags);
 	return (i);
-}
-
-int		checking(char *str)
-{
-	if (ft_strchr((const char *)str, '%'))
-		return (0);
-	else
-		write(1, str, ft_strlen(str));
-	return (1);
 }
 
 int		ft_printf(const char *format, ...)

@@ -44,6 +44,7 @@ int			executor(t_opt *flags, va_list ap);
 char		*did_executor(t_opt *flags, va_list ap);
 char		*search_helper(char *s, t_opt *flags);
 intmax_t	take_arg_d(t_opt *flags, va_list ap);
+void		d_precision(char *str, t_opt *flags);
 
 void	show_structure(t_opt *flags);
 #endif

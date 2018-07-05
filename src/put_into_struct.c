@@ -36,7 +36,6 @@ char	*put_precision(char *s, t_opt *flags)
 	// printf("precision s: %s\n", s);
 	while (ft_isdigit(*s) && s++)
 		len++;
-	// nb = ;
 	flags->precision = ft_atoi(pos);
 	// printf("len: %d, nb: %d, flags->precision: %d\n", len, nb, flags->precision);
 	return (s);
@@ -60,7 +59,7 @@ char	*put_width(char *s, t_opt *flags)
 	ft_strncpy(tmp, pos, len);
 	nb = ft_atoi(tmp);
 	flags->width = nb;
-	// printf("tmp: %s, nb: %d, flags->width: %d\n", tmp, snb, flags->width);
+	// printf("tmp: %s, nb: %d, flags->width: %d\n", tmp, nb, flags->width);
 	ft_strdel(&tmp);
 	return (s);
 }

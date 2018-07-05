@@ -20,7 +20,25 @@ int	main(void)
 	// char c = 255;
 	// ft_printf("%5%")
 	// ft_printf("%d\n", 1212);
-	// printf("%5d\n", 1);
-	// printf("-: %s\n", ft_itoa(0));
+	// ft_printf("dadasdada   asd%+- 05.10d helol", 1);
+
+	   printf("%.1d\n", 123);
+	ft_printf("%.1d\n", 123);
+	   printf("%.2d\n", 123);
+	ft_printf("%.2d\n", 123);
+	   printf("%.3d\n", 123);
+	ft_printf("%.3d\n", 123);
+	   printf("%+.4d\n", 123);
+	ft_printf("%+.4d\n", 123);
+	   printf("%+.5d\n", 123);
+	ft_printf("%+.5d\n", 123);
+	   printf("%+.6d\n", 123);
+	ft_printf("%+.6d\n", 123);
+	   printf("%+.7d\n", 123);
+	ft_printf("%+.7d\n", 123);
+	   printf("%+.8d\n", 123);
+	ft_printf("%+.8d\n", 123);
+	   printf("%+.9d\n", 123);
+	ft_printf("%+.9d\n", 123);
 	return (0);
 }

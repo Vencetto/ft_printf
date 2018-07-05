@@ -30,7 +30,6 @@ intmax_t	take_arg_d(t_opt *flags, va_list ap)
 {
 	intmax_t	nb;
 
-	// printf("%p\n", flags);
 	nb = 0;
 	if (flags->modif == 'h')
 		nb = (short)va_arg(ap, int);
@@ -47,6 +46,15 @@ intmax_t	take_arg_d(t_opt *flags, va_list ap)
 	// else if (flags->modif == 'z')
 	// 	s = ft_itoabase(va_arg(ap, int), 10);
 	return (nb);
+}
+
+int		checking(char *str)
+{
+	if (ft_strchr((const char *)str, '%'))
+		return (0);
+	else
+		write(1, str, ft_strlen(str));
+	return (1);
 }
 
 void	show_structure(t_opt *flags)
