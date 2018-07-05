@@ -28,36 +28,40 @@ void	put_flags(char c, t_opt *flags)
 
 char	*put_precision(char *s, t_opt *flags)
 {
-	int nb;
-	int len;
+	int		len;
+	char	*pos;
 
-	len = ft_strlen(s);
-	nb = ft_atoi(s);
-	flags->precision = nb;
-	return (s);// + len);
+	len = 0;
+	pos = s;
+	// printf("precision s: %s\n", s);
+	while (ft_isdigit(*s) && s++)
+		len++;
+	// nb = ;
+	flags->precision = ft_atoi(pos);
+	// printf("len: %d, nb: %d, flags->precision: %d\n", len, nb, flags->precision);
+	return (s);
 }
 
 char	*put_width(char *s, t_opt *flags)
 {
-	// int		nb;
-	// int		len;
-	// char	*str;
-	// char	*tmp;
-	(void)flags;
-	// len = 0;
-	// while (*s >= '0' && *s <= '9')
-	// {
-	// 	len++;
-	// 	s++;
-	// }
-	// printf("len: %d", len);
-	// tmp = ft_strnew(len);
-	// str = ft_strnew(len);
-	// str = ft_strncpy(tmp, s, len);
-	// nb = ft_atoi(str);
-	// flags->width = nb;
-	// free(tmp);
-	// free(str);
+	int		nb;
+	int		len;
+	char	*tmp;
+	char	*pos;
+
+	len = 0;
+	pos = s;
+	// printf("1 width s: %s\n", s);
+	while (ft_isdigit(*s) && s++)
+		len++;
+	// printf("len: %d\n", len);
+	// printf("2 width s: %s\n", s);
+	tmp = ft_strnew(len);
+	ft_strncpy(tmp, pos, len);
+	nb = ft_atoi(tmp);
+	flags->width = nb;
+	// printf("tmp: %s, nb: %d, flags->width: %d\n", tmp, snb, flags->width);
+	ft_strdel(&tmp);
 	return (s);
 }
 

@@ -14,6 +14,7 @@
 
 void	set_all_zero(t_opt *flags)
 {
+	// flags = (t_opt *)malloc(sizeof(t_opt));
 	flags->minus = 0;
 	flags->plus = 0;
 	flags->space = 0;
@@ -23,6 +24,29 @@ void	set_all_zero(t_opt *flags)
 	flags->width = 0;
 	flags->modif = '0';
 	flags->sp_type = '0';
+}
+
+intmax_t	take_arg_d(t_opt *flags, va_list ap)
+{
+	intmax_t	nb;
+
+	// printf("%p\n", flags);
+	nb = 0;
+	if (flags->modif == 'h')
+		nb = (short)va_arg(ap, int);
+	else
+		nb = va_arg(ap, int);
+	// else if (flags->modif == 'hh')
+	// 	s = ft_itoabase(va_arg(ap, int), 10);
+	// else if (flags->modif == 'l')
+	// 	s = ft_itoabase(va_arg(ap, long), 10);
+	// else if (flags->modif == 'll')
+	// 	s = ft_itoabase(va_arg(ap, int), 10);
+	// else if (flags->modif == 'j')
+	// 	s = ft_itoabase(va_arg(ap, int), 10);
+	// else if (flags->modif == 'z')
+	// 	s = ft_itoabase(va_arg(ap, int), 10);
+	return (nb);
 }
 
 void	show_structure(t_opt *flags)

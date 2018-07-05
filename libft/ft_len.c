@@ -12,12 +12,12 @@
 
 #include "libft.h"
 
-int		ft_len(int n)
+int		ft_len(int n, int base)
 {
 	int	i;
 
 	i = 1;
-	while (n /= 10)
+	while (n /= base)
 		i++;
 	return (i);
 }

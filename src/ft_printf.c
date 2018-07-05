@@ -14,14 +14,20 @@
 
 char	*search_helper(char *s, t_opt *flags)
 {
-	while (s)
+	while (*s)
 	{
+		// printf("\t1 s: %s\n", s);
 		if (*s >= '0' && *s <= '9')
 			s = put_width(s, flags);
-		else if (*s == '.')
+		// printf("\t2 s: %s\n", s);
+		if (*s == '.')
 			s = put_precision(s + 1, flags);
+		// printf("\t3 s: %s\n", s);
 		if (!(*(s + 1) >= '0' && *(s + 1) <= '9'))
+		{
+			// printf("must be here\n");
 			return (s);
+		}
 		s++;
 	}
 	return (s);
@@ -29,7 +35,7 @@ char	*search_helper(char *s, t_opt *flags)
 
 char	*search_for_flags(char *s, t_opt *flags)
 {
-	while (s)
+	while (*s)
 	{
 		if (*s == ' ' || *s == '-' || *s == '+' || *s == '#' || *s == '0')
 			put_flags(*s, flags);
@@ -39,10 +45,10 @@ char	*search_for_flags(char *s, t_opt *flags)
 			(put_modificator(*s, *(s + 1), flags) ? s++ : 0);
 		else if (*s == 's' || *s == 'S' || *s == 'p' || *s == 'd' || *s == 'D' ||
 			*s == 'i' || *s == 'o' || *s == 'O' || *s == 'u' || *s == 'U' ||
-			*s == 'x' || *s == 'X' || *s == 'c' || *s == 'C')
+			*s == 'x' || *s == 'X' || *s == 'c' || *s == 'C' || *s == '%')
 		{
 			flags->sp_type = *s;
-			return (s + 1);
+			return (s);
 		}
 		s++;
 	}
@@ -54,8 +60,8 @@ int		parser(va_list ap, char *str)
 	t_opt	flags;
 	int		i;
 
-	(void)ap;
 	i = 0;
+	flags = *(t_opt *)malloc(sizeof(t_opt));
 	while (*str)
 	{
 		if (*str == '%')
@@ -63,14 +69,14 @@ int		parser(va_list ap, char *str)
 			if (*(str + 1) == '%')
 			{
 				write(1, "%", 1);
-				str = str + 2;
 				i++;
+				str++;
 			}
 			else
 			{
 				set_all_zero(&flags);
 				str = search_for_flags(str + 1, &flags);
-				// executor(&flags, ap);
+				i += executor(&flags, ap);
 			}
 		}
 		else
@@ -80,7 +86,7 @@ int		parser(va_list ap, char *str)
 		}
 		str++;
 	}
-	show_structure(&flags);
+	// show_structure(&flags);
 	return (i);
 }
 
@@ -98,6 +104,7 @@ int		ft_printf(const char *format, ...)
 	va_list	ap;
 	int		res;
 
+	res = 0;
 	if (format)
 	{
 		if (checking((char *)format))
@@ -109,5 +116,5 @@ int		ft_printf(const char *format, ...)
 			va_end(ap);
 		}
 	}
-	return (0);
+	return (res);
 }

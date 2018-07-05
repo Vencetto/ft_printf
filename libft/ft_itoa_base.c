@@ -12,25 +12,23 @@
 
 #include "libft.h"
 
-char		*ft_itoa_base(int nb, int base)
+char		*ft_itoa_base(intmax_t nb, int base)
 {
 	int		len;
 	char	*str;
+	int		sign;
 
+	sign = 0;
 	len = ft_len(nb, base);
-	if (value == -9223372036854775807 - 1)
+	if (nb == -9223372036854775807 - 1)
 		return (ft_strdup("-9223372036854775808"));
+	if (!(str = ft_strnew(len)))
+		return (NULL);
 	if (nb < 0 && base == 10)
 	{
 		len++;
-		if (!(str = ft_strnew(len)))
-			return (NULL);
-		str[0] = '-';
-	}
-	else
-	{
-		if (!(str = ft_strnew(len)))
-			return (NULL);
+		sign = 1;
+		nb *= -1;
 	}
 	str[len] = '\0';
 	while (len--)
@@ -38,5 +36,7 @@ char		*ft_itoa_base(int nb, int base)
 		str[len] = (nb % base) + (nb % base > 9 ? 'a' - 10 : '0');
 		nb /= base;
 	}
+	if (sign)
+		str[0] = '-';
 	return (str);
 }

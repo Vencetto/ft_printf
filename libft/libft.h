@@ -84,7 +84,8 @@ void				ft_lstadd(t_list **alst, t_list *new);
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 size_t				ft_chars(char const *s, char c);
-int					ft_len(int n);
+int					ft_len(int n, int base);
 int					ft_abs(int n);
 size_t				ft_wordnum(const char *s, char c);
+char				*ft_itoa_base(intmax_t nb, int base);
 #endif

@@ -12,21 +12,29 @@
 
 #include "../includes/ft_printf.h"
 
-void	executor(t_opt *flags, va_list ap)
+int		executor(t_opt *flags, va_list ap)
 {
-	if (flags->sp_type == 'd' || flags->sp_type =='i' || flags->sp_type =='D')
-		Did_executor(flags, ap);
+	char	*str;
+	int		len;
+
+	if (flags->sp_type == 'd' || flags->sp_type == 'i' || flags->sp_type == 'D')
+		str = did_executor(flags, ap);
+	len = ft_strlen(str);
+	ft_putstr(str);
+	return (len);
 }
 
-void	Did_executor(t_opt *flags, va_list ap)
-{
-	int nb;
-									(void)flags;
-	nb = va_arg(ap, int);
-	ft_putnbr(nb);
-	// if (# && !0)
-	// 	//
-	// if (0)
-	// 	//
+// int		modif(int nb, t_opt *flags)
+// {
+	
+// }
 
+char	*did_executor(t_opt *flags, va_list ap)
+{
+	intmax_t	nb;
+	char		*str;
+
+	nb = take_arg_d(flags, ap);
+	str = ft_itoa_base(nb, 10);
+	return (str);
 }

@@ -17,7 +17,7 @@ char		*ft_itoa(int n)
 	int		len;
 	char	*str;
 
-	len = ft_len(n);
+	len = ft_len(n, 10);
 	if (n < 0)
 	{
 		len++;
