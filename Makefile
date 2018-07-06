@@ -15,7 +15,7 @@ NAME = libftprintf.a
 SRC =	src/ft_printf.c \
 		src/put_into_struct.c \
 		src/additional.c \
-		src/execute.c 
+		src/d_execute.c 
 
 OBJ =	*.o
 

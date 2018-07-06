@@ -12,18 +12,15 @@
 
 #include "../includes/ft_printf.h"
 
-void	set_all_zero(t_opt *flags)
+char		*ft_strinst(char *str)
 {
-	// flags = (t_opt *)malloc(sizeof(t_opt));
-	flags->minus = 0;
-	flags->plus = 0;
-	flags->space = 0;
-	flags->sharp = 0;
-	flags->zero = 0;
-	flags->precision = 0;
-	flags->width = 0;
-	flags->modif = '0';
-	flags->sp_type = '0';
+	char	*tmp;
+
+	tmp = str;
+	str = ft_strnew(1);
+	str[0] = '%';
+	free(tmp);
+	return (str);
 }
 
 intmax_t	take_arg_d(t_opt *flags, va_list ap)
