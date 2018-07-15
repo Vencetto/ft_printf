@@ -17,13 +17,13 @@ char	*search_helper(char *s, t_opt *flags)
 	while (*s)
 	{
 		// printf("\t1 s: %s\n", s);
-		if (*s >= '0' && *s <= '9')
+		if (*s >= '1' && *s <= '9')
 			s = put_width(s, flags);
 		// printf("\t2 s: %s\n", s);
 		if (*s == '.')
 			s = put_precision(s + 1, flags);
 		// printf("\t3 s: %s\n", s);
-		if (!(*(s + 1) >= '0' && *(s + 1) <= '9'))
+		if (!(*(s + 1) >= '1' && *(s + 1) <= '9'))
 		{
 			// printf("must be here\n");
 			return (s);
@@ -39,7 +39,7 @@ char	*search_for_flags(char *s, t_opt *flags)
 	{
 		if (*s == ' ' || *s == '-' || *s == '+' || *s == '#' || *s == '0')
 			put_flags(*s, flags);
-		if (*s == '.' || (*s >= '0' && *s <= '9'))
+		if (*s == '.' || (*s >= '1' && *s <= '9'))
 			s = search_helper(s, flags);
 		if (*s == 'h' | *s == 'l' || *s == 'j' || *s == 'z')
 			(put_modificator(*s, *(s + 1), flags) ? s++ : 0);
@@ -77,6 +77,7 @@ int		parser(va_list ap, char *str)
 		}
 		str++;
 	}
+	// system("leaks a.out");
 	return (i);
 }
 

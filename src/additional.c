@@ -23,6 +23,22 @@ char		*ft_strinst(char *str)
 	return (str);
 }
 
+void		minus_prec(char *str)
+{
+	int		len;
+	int		i;
+
+	len = ft_strlen(str);
+	i = 0;
+	if (ft_strchr(str, '-'))
+	{
+		while (str[i] != '-')
+			i++;
+		str[i] = '0';
+		str[0] = '-';
+	}
+}
+
 intmax_t	take_arg_d(t_opt *flags, va_list ap)
 {
 	intmax_t	nb;
@@ -45,7 +61,7 @@ intmax_t	take_arg_d(t_opt *flags, va_list ap)
 	return (nb);
 }
 
-int		checking(char *str)
+int			checking(char *str)
 {
 	if (ft_strchr((const char *)str, '%'))
 		return (0);
@@ -54,7 +70,7 @@ int		checking(char *str)
 	return (1);
 }
 
-void	show_structure(t_opt *flags)
+void		show_structure(t_opt *flags)
 {
 	printf("\nStructure---\n");
 	printf("minus:     %d\n", flags->minus);

@@ -41,13 +41,16 @@ char		*put_precision(char *c, t_opt *flags);
 char		*put_width(char *c, t_opt *flags);
 int			put_modificator(char c, char s, t_opt *flags);
 int			executor(t_opt *flags, va_list ap);
-char		*did_executor(t_opt *flags, va_list ap);
+int			did_executor(t_opt *flags, va_list ap);
 char		*search_helper(char *s, t_opt *flags);
 intmax_t	take_arg_d(t_opt *flags, va_list ap);
 void		d_precision(char *str, t_opt *flags);
-void		d_width(char *str, t_opt *flags);
+void		d_width(char *str, t_opt *flags, char ch);
 char		*ft_strinst(char *str);
-void		d_plus(char *str);
+void		d_plus(char *str, char ch);
+void		minus_prec(char *str);
+int			s_executor(t_opt *flags, va_list ap);
+void		s_precision(int prec, char *str);
 
 void	show_structure(t_opt *flags);
 #endif

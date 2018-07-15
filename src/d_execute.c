@@ -14,21 +14,18 @@
 
 int		executor(t_opt *flags, va_list ap)
 {
-	char	*str;
 	int		len;
 
 	len = 0;
-	if (flags->sp_type == 'd' || flags->sp_type == 'i' || flags->sp_type == 'D' || flags->sp_type == '%')
-	{
-		str = did_executor(flags, ap);
-		len = ft_strlen(str);
-		ft_putstr(str);
-		free(str);
-	}
+	if (flags->sp_type == 'd' || flags->sp_type == 'i' ||
+		flags->sp_type == 'D' || flags->sp_type == '%')
+		len = did_executor(flags, ap);
+	else if (flags->sp_type == 's')
+		len = s_executor(flags, ap);
 	return (len);
 }
 
-void	d_width(char *str, t_opt *flags)
+void	d_width(char *str, t_opt *flags, char ch)
 {
 	int		len;
 	char	*tmp;
@@ -46,11 +43,10 @@ void	d_width(char *str, t_opt *flags)
 		tmp = ft_strdup(str);
 		width = flags->width - len;
 		while (width--)
-			str[i++] = ' ';
+			str[i++] = ch;
 		while (len--)
 		{
-			str[i] = tmp[j];
-			i++;
+			str[i++] = tmp[j];
 			j++;
 		}
 		str[i] = '\0';
@@ -79,8 +75,7 @@ void	d_precision(char *str, t_opt *flags)
 			str[i++] = '0';
 		while (len--)
 		{
-			str[i] = tmp[j];
-			i++;
+			str[i++] = tmp[j];
 			j++;
 		}
 		str[i] = '\0';
@@ -88,51 +83,62 @@ void	d_precision(char *str, t_opt *flags)
 	}
 }
 
-void	d_plus(char *str)
+void	d_plus(char *str, char ch)
 {
 	char	*tmp;
 	int		i;
+	int		j;
 
 	i = 0;
+	j = 0;
 	if (str[i] == ' ')
 	{
 		while (str[i + 1] == ' ')
 			i++;
-		str[i] = '+';
+		str[i] = ch;
 		return ;
 	}
 	else
 	{
 		tmp = ft_strdup(str);
-		str[i] = '+';
-		i++;
-		while (*tmp)
+		str[i++] = ch;
+		while (tmp[j])
 		{
-			str[i] = *tmp;
-			i++;
-			tmp++;
+			str[i++] = tmp[j];
+			j++;
 		}
+		str[i] = '\0';
 		ft_strdel(&tmp);
-		// printf("str: bef %s %p\n", str, str);
 	}
 }
 
-char	*did_executor(t_opt *flags, va_list ap)
+int		did_executor(t_opt *flags, va_list ap)
 {
 	intmax_t	nb;
+	int			len;
 	char		*str;
 
 	nb = take_arg_d(flags, ap);
 	str = ft_itoa_base(nb, 10);
+
+	// printf("gotdamnshit_str: %s\n", str);
+
 	if (flags->sp_type == '%')
 		str = ft_strinst(str);
 	if (flags->precision)
 		d_precision(str, flags);
-	if (flags->width)
-		d_width(str, flags);
-	// printf("str1: %s %p\n", str, str);
-	if (flags->plus && nb > 0)
-		d_plus(str);
-	// printf("str2: %s %p\n", str, str);
-	return (str);
+	if (flags->width && !flags->zero)
+		d_width(str, flags, ' ');
+	else if (flags->width && flags->zero)
+		d_width(str, flags, '0');
+	if (flags->space && !flags->plus && flags->sp_type != '%' && nb >= 0)
+		d_plus(str, ' ');
+	if (flags->plus && nb >= 0)
+		d_plus(str, '+');
+	if (nb < 0 && (flags->precision || flags->zero))
+		minus_prec(str);
+	len = ft_strlen(str);
+	ft_putstr(str);
+	free(str);
+	return (len);
 }
