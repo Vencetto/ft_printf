@@ -17,6 +17,7 @@
 #include <stdarg.h>
 #include "../libft/libft.h"
 									#include <stdio.h>
+#include <stddef.h>
 
 typedef struct	s_opt
 {
@@ -27,7 +28,7 @@ typedef struct	s_opt
 	int			zero;
 	int			precision;
 	int			width;
-	char		modif;
+	char		*modif;
 	char		sp_type;
 }				t_opt;
 
@@ -51,6 +52,23 @@ void		d_plus(char *str, char ch);
 void		minus_prec(char *str);
 int			s_executor(t_opt *flags, va_list ap);
 void		s_precision(int prec, char *str);
+int			c_execute(t_opt *flags, va_list ap);
+int			s_minus(char *str, t_opt *flags);
+int			ft_loop(int count, char ch);
+int			ft_strwrite(char *str, int count);
+int			s_minus_2(char *str, t_opt *flags);
+int			s_executor_2(char *str, t_opt *flags);
+intmax_t	did_1(t_opt *flags, intmax_t nb);
+intmax_t	did_2(t_opt *flags, intmax_t nb);
+intmax_t	did_3(t_opt *flags, intmax_t nb);
+intmax_t	helper_did_2(t_opt *flags, intmax_t nb);
+intmax_t	helper_did(t_opt *flags, intmax_t nb);
+int			percent_executor(t_opt *flags);
+intmax_t	did_0(t_opt *flags, intmax_t nb);
+int			ft_check_sign(t_opt *flags, intmax_t nb);
+int			if_check_sign(t_opt *flags, intmax_t nb);
+intmax_t	did_1_help(t_opt *flags, intmax_t nb);
+intmax_t	did_1_help(t_opt *flags, intmax_t nb);
 
 void	show_structure(t_opt *flags);
 #endif

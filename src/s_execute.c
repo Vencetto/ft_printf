@@ -31,14 +31,51 @@ int		ft_strwrite(char *str, int count)
 	int i;
 
 	i = 0;
-	while (str && count > 1)
+	while (str[i] && count > 0)
 	{
-		write(1, str, 1);
-		str++;
+		write(1, &str[i], 1);
 		count--;
 		i++;
 	}
 	return (i);
+}
+
+int		s_minus_2(char *str, t_opt *flags)
+{
+	int len;
+
+	len = 0;
+	if (flags->minus)
+	{
+		len = ft_strwrite(str, flags->precision);
+		len += ft_loop(flags->width - len, ' ');
+	}
+	else
+	{
+		len = ft_loop(flags->width - flags->precision, ' ');
+		len += ft_strwrite(str, flags->precision);
+	}
+	return (len);
+}
+
+int		s_minus(char *str, t_opt *flags)
+{
+	int len;
+
+	len = 0;
+	if (flags->minus)
+	{
+		write(1, str, ft_strlen(str));
+		len = ft_strlen(str);
+		len += ft_loop(flags->width - (int)ft_strlen(str), ' ');
+	}
+	else
+	{
+		len = ft_loop(flags->width - (int)ft_strlen(str), ' ');
+		write(1, str, ft_strlen(str));
+		len += ft_strlen(str);
+	}
+	return (len);
 }
 
 int		s_executor_2(char *str, t_opt *flags)
@@ -48,15 +85,14 @@ int		s_executor_2(char *str, t_opt *flags)
 	len = 0;
 	if (flags->precision && !flags->width)
 	{
-		write(1, str, flags->precision);
-		return (flags->precision);
+		len = ft_strwrite(str, flags->precision);
+		return (len);
 	}
 	else if (flags->precision && flags->width)
 	{
 		if (flags->width > (int)ft_strlen(str))
-			len = ft_loop(flags->width - (int)ft_strlen(str), ' ');
-		// printf("flags->width: %d, ft_strlen(str): %zu, len: %d, flags->precision: %d\n", flags->width, ft_strlen(str), len, flags->precision);
-		len += ft_strwrite(str, flags->precision);
+			return ((len += s_minus_2(str, flags)));
+		len = ft_strwrite(str, flags->precision);
 		return (len);
 	}
 	else
@@ -73,15 +109,21 @@ int		s_executor(t_opt *flags, va_list ap)
 	str = va_arg(ap, char *);
 	if (str == NULL)
 	{
-		write(1, "(null)\0", 7);
-		return (7);
+		write(1, "(null)", 6);
+		return (6);
+	}
+	else if (ft_strlen(str) == 0)
+	{
+		if (flags->width)
+			len = ft_loop(flags->width, ' ');
+		return (len);
 	}
 	else if (flags->width && !flags->precision)
 	{
 		if (flags->width > (int)ft_strlen(str))
-			len = ft_loop(flags->width - (int)ft_strlen(str), ' ');
+			return ((len = s_minus(str, flags)));
 		write(1, str, ft_strlen(str));
-		return (len += ft_strlen(str));
+		return (len);
 	}
 	len = s_executor_2(str, flags);
 	return (len);
