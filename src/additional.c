@@ -12,6 +12,26 @@
 
 #include "../includes/ft_printf.h"
 
+int			check_zero(t_opt *flags, intmax_t nb)
+{
+	if (nb == 0)
+	{
+		if (flags->point && !flags->precision && !flags->sharp)
+			return (1);
+	}
+	return (0);
+}
+
+int			ft_crutch(t_opt *flags)
+{
+	if (flags->width)
+	{
+		ft_loop(flags->width, ' ');
+		return (flags->width);
+	}
+	return (0);
+}
+
 int			checking(char *str)
 {
 	if (ft_strchr((const char *)str, '%'))
@@ -31,6 +51,7 @@ void		show_structure(t_opt *flags)
 	printf("zero:      %d\n", flags->zero);
 	printf("precision: %d\n", flags->precision);
 	printf("width:     %d\n", flags->width);
+	printf("point:     %d\n", flags->point);
 	printf("modif:     %s\n", flags->modif);
 	printf("sp_type:   %c\n", flags->sp_type);
 	printf("------------\n\n");

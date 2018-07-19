@@ -21,6 +21,7 @@ void	set_all_zero(t_opt *flags)
 	flags->zero = 0;
 	flags->precision = 0;
 	flags->width = 0;
+	flags->point = 0;
 	flags->modif = "0";
 	flags->sp_type = '0';
 }
@@ -93,7 +94,7 @@ int		put_modificator(char c, char s, t_opt *flags)
 	{
 		if (s == 'l')
 		{
-			flags->modif = "L";
+			flags->modif = "ll";
 			return (1);
 		}
 		else

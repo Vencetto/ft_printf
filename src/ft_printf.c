@@ -16,6 +16,8 @@ char	*search_helper(char *s, t_opt *flags)
 {
 	while (*s)
 	{
+		if (*s == '.' || *(s + 1) == '.')
+			flags->point = 1;
 		// printf("\t1 s: %s\n", s);
 		if (*s >= '1' && *s <= '9')
 			s = put_width(s, flags);
