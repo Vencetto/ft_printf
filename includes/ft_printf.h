@@ -18,6 +18,8 @@
 #include "../libft/libft.h"
 									#include <stdio.h>
 #include <stddef.h>
+#include <locale.h>
+#include <wchar.h>
 
 typedef struct	s_opt
 {
@@ -77,7 +79,33 @@ int			u_executor(t_opt *flags, va_list ap);
 int			bu_executor(t_opt *flags, va_list ap);
 int			o_executor(t_opt *flags, va_list ap);
 uintmax_t	take_arg_o(t_opt *flags, va_list ap);
-int			ox_did(t_opt *flags, intmax_t nb);
+int			ox_did(t_opt *flags, intmax_t nb, char *str);
+char		*take_arg_x(t_opt *flags, va_list ap);
+int			x_executor(t_opt *flags, va_list ap);
+int			x_check_zero(t_opt *flags, char *str);
+intmax_t	x_did_0(t_opt *flags, char *str);
 
+int			x_check_zero(t_opt *flags, char *str);
+intmax_t	x_did_0(t_opt *flags, char *str);
+intmax_t	x_did_2_help(t_opt *flags, char *str);
+intmax_t	x_did_1_help(t_opt *flags, char *str);
+intmax_t	x_did_1(t_opt *flags, char *str);
+intmax_t	x_did_2(t_opt *flags, char *str);
+intmax_t	x_helper_did(t_opt *flags, char *str);
+intmax_t	x_helper_did_2(t_opt *flags, char *str);
+intmax_t	x_did_3(t_opt *flags, char *str);
+int			p_executor(t_opt *flags, va_list ap);
+int			bc_execute(va_list ap);
+int			count_bytes(wchar_t c);
+int			put_wchar(wchar_t c);
+int			ft_unistrwrite(wchar_t *str, int count);
+int			bs_executor_2(wchar_t *str, t_opt *flags);
+int			bs_executor(t_opt *flags, va_list ap);
+int			bs_minus_2(wchar_t *str, t_opt *flags);
+int			bs_minus(wchar_t *str, t_opt *flags);
+int			executor_2(t_opt *flags, va_list ap);
+int			bd_executor(t_opt *flags, va_list ap);
+int			bo_executor(t_opt *flags, va_list ap);
 void	show_structure(t_opt *flags);
+
 #endif

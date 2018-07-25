@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   o_execute.c                                        :+:      :+:    :+:   */
+/*   x_executor.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vzomber <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/19 19:11:09 by vzomber           #+#    #+#             */
-/*   Updated: 2018/07/19 19:11:10 by vzomber          ###   ########.fr       */
+/*   Created: 2018/07/21 13:25:50 by vzomber           #+#    #+#             */
+/*   Updated: 2018/07/21 13:25:51 by vzomber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-uintmax_t	take_arg_o(t_opt *flags, va_list ap)
+char		*take_arg_x(t_opt *flags, va_list ap)
 {
 	uintmax_t	nb;
+	char		*str;
 
 	nb = 0;
 	if (!ft_strcmp(flags->modif, "h"))
@@ -27,34 +28,36 @@ uintmax_t	take_arg_o(t_opt *flags, va_list ap)
 		nb = (unsigned long long)va_arg(ap, long long);
 	else if (!ft_strcmp(flags->modif, "z"))
 		nb = va_arg(ap, size_t);
+	else if (!ft_strcmp(flags->modif, "j"))
+		nb = (uintmax_t)va_arg(ap, uintmax_t);
 	else
 		nb = (unsigned int)va_arg(ap, int);
-	nb = ft_atoi(ft_itoa_base(nb, 8));
-	return (nb);
+	str = ft_uitoa_base(nb, 16);
+	if (flags->sp_type == 'X')
+		ft_upletters(str);
+	return (str);
 }
 
-int		o_executor(t_opt *flags, va_list ap)
+int		x_executor(t_opt *flags, va_list ap)
 {
-	intmax_t	nb;
+	char		*str;
 	int			len;
 
 	len = 0;
-	nb = take_arg_o(flags, ap);
-	if (check_zero(flags, nb))
+	str = take_arg_x(flags, ap);
+	if (x_check_zero(flags, str))
 		return (ft_crutch(flags));
-	if (if_check_sign(flags,nb) && flags->width > flags->precision)
-		flags->width--;
+	// if (if_check_sign(flags, str) && flags->width > flags->precision)
+	// 	flags->width--;
 	if (!flags->width && !flags->precision)
-		return ((len = did_0(flags, nb)));
+		return ((len = x_did_0(flags, str, 1)));
 	else if (flags->width && !flags->precision)
-		return ((len = did_1(flags, nb)));
+		return ((len = x_did_1(flags, str, 1)));
 	else if (!flags->width && flags->precision)
-		return ((len = did_2(flags, nb)));
+		return ((len = x_did_2(flags, str)));
 	else if (flags->width && flags->precision)
-		return ((len = did_3(flags, nb)));
-	ft_putnbr(nb);
-	len = ft_len(nb, 10);
-	if (nb < 0)
-		len++;
+		return ((len = x_did_3(flags, str)));
+	ft_putstr(str);
+	len = ft_strlen(str);
 	return (len);
 }

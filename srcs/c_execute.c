@@ -33,3 +33,14 @@ int		c_execute(t_opt *flags, va_list ap)
 	write(1, &c, 1);
 	return (len);
 }
+
+int		bc_execute(va_list ap)
+{
+	int	c;
+	int	len;
+
+	setlocale(LC_ALL, "");
+	c = va_arg(ap, int);
+	len = put_wchar(c);
+	return (len);
+}

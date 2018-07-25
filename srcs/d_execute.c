@@ -34,6 +34,32 @@ intmax_t	take_arg_d(t_opt *flags, va_list ap)
 	return (nb);
 }
 
+int		bd_executor(t_opt *flags, va_list ap)
+{
+	intmax_t	nb;
+	int			len;
+
+	len = 0;
+	nb = va_arg(ap, long);
+	if (check_zero(flags, nb))
+		return (ft_crutch(flags));
+	if (if_check_sign(flags,nb) && flags->width > flags->precision)
+		flags->width--;
+	if (!flags->width && !flags->precision)
+		return ((len = did_0(flags, nb)));
+	else if (flags->width && !flags->precision)
+		return ((len = did_1(flags, nb)));
+	else if (!flags->width && flags->precision)
+		return ((len = did_2(flags, nb)));
+	else if (flags->width && flags->precision)
+		return ((len = did_3(flags, nb)));
+	ft_putnbr(nb);
+	len = ft_len(nb, 10);
+	if (nb < 0)
+		len++;
+	return (len);
+}
+
 int		if_check_sign(t_opt *flags, intmax_t nb)
 {
 	if (flags->sp_type != 'u')
@@ -50,7 +76,7 @@ int		if_check_sign(t_opt *flags, intmax_t nb)
 
 int		ft_check_sign(t_opt *flags, intmax_t nb)
 {
-	if (flags->sp_type != 'u')
+	if (flags->sp_type != 'u' && flags->sp_type != 'U')
 	{
 		if (flags->plus)
 		{
@@ -82,27 +108,43 @@ intmax_t	did_0(t_opt *flags, intmax_t nb)
 	intmax_t	len;
 	int			ox;
 
-	ox = 0;
-	len = ft_len(nb, 10);
+	if (flags->sp_type == 'u' || flags->sp_type == 'U')
+		len = ft_ulen(nb, 10);
+	else
+		len = ft_len(nb, 10);
 	len += ft_check_sign(flags, nb);
-	if ((flags->sp_type == 'o' || flags->sp_type == 'x')
-		&& flags->sharp && nb != 0)
-	{
-		ft_putchar('0');
-		ox++;
-	}
-	ft_putnbr_m(nb);
+	ox = ox_did(flags, nb, NULL);
+	if (flags->sp_type == 'u' || flags->sp_type == 'U')
+		ft_uputnbr_m(nb);
+	else
+		ft_putnbr_m(nb);
 	return (len + ox);
 }
 
-int			ox_did(t_opt *flags, intmax_t nb)
+int			ox_did(t_opt *flags, intmax_t nb, char *str)
 {
-	if ((flags->sp_type == 'o' || flags->sp_type == 'x')
-		&& flags->sharp && nb != 0)
+	if (flags->sp_type == 'o' && flags->sharp && nb != 0)
 	{
 		ft_putchar('0');
 		flags->width--;
 		return (1);
+	}
+	if (flags->sp_type == 'x' && flags->sharp && ft_strcmp(str, "0"))
+	{
+		ft_putstr("0x");
+		flags->width -= 2;
+		return (2);
+	}
+	if (flags->sp_type == 'X' && flags->sharp && ft_strcmp(str, "0"))
+	{
+		ft_putstr("0X");
+		flags->width -= 2;
+		return (2);
+	}
+	if (flags->sp_type == 'p')
+	{
+		ft_putstr("0x");
+		return (2);
 	}
 	return (0);
 }
@@ -119,16 +161,16 @@ intmax_t	did_2_help(t_opt *flags, intmax_t nb)
 	if (flags->zero)
 	{
 		tmp = ft_check_sign(flags, nb);
-		ox = ox_did(flags, nb);
+		ox = ox_did(flags, nb, NULL);
 		i = ft_loop(flags->width - len, '0');
 		ft_putnbr_m(nb);
 	}
 	else
 	{
-		if ((flags->sp_type == 'o' || flags->sp_type == 'x') && flags->sharp)
+		if (flags->sp_type == 'o' && flags->sharp)
 			flags->width--;
 		i = ft_loop(flags->width - len, ' ');
-		ox = ox_did(flags, nb);
+		ox = ox_did(flags, nb, NULL);
 		tmp = ft_check_sign(flags, nb);
 		ft_putnbr_m(nb);
 	}
@@ -145,8 +187,7 @@ intmax_t	did_1_help(t_opt *flags, intmax_t nb)
 	ox = 0;
 	len = ft_len(nb, 10);
 	tmp = ft_check_sign(flags, nb);
-	if ((flags->sp_type == 'o' || flags->sp_type == 'x')
-		&& flags->sharp && nb != 0)
+	if (flags->sp_type == 'o' && flags->sharp && nb != 0)
 	{
 		ft_putchar('0');
 		ox++;
@@ -161,9 +202,7 @@ intmax_t	did_1(t_opt *flags, intmax_t nb)
 {
 	intmax_t	len;
 	int			i;
-	int			tmp;
 
-	tmp = 0;
 	len = ft_len(nb, 10);
 	if (flags->width > len)
 	{
@@ -174,7 +213,7 @@ intmax_t	did_1(t_opt *flags, intmax_t nb)
 		return (i);
 	}
 	ft_putnbr_m(nb);
-	return (len + tmp);
+	return (len);
 }
 
 intmax_t	did_2(t_opt *flags, intmax_t nb)
@@ -205,7 +244,7 @@ intmax_t	helper_did(t_opt *flags, intmax_t nb)
 
 	i = 0;
 	len = ft_len(nb, 10);
-	tmp = flags->precision > len ? (flags->precision - len) : len;
+	tmp = flags->precision > len ? (flags->precision - len) : 0;
 	if (flags->zero)
 	{
 		if (flags->precision < flags->width)
@@ -234,7 +273,7 @@ intmax_t	helper_did_2(t_opt *flags, intmax_t nb)
 
 	i = 0;
 	len = ft_len(nb, 10);
-	tmp = flags->precision > len ? (flags->precision - len) : len;
+	tmp = flags->precision > len ? (flags->precision - len) : 0;
 	ch = ft_check_sign(flags, nb);
 	i = ft_loop(tmp, '0') + len;
 	ft_putnbr_m(nb);
@@ -251,7 +290,7 @@ intmax_t	did_3(t_opt *flags, intmax_t nb)
 
 	i = 0;
 	len = ft_len(nb, 10);
-	tmp = flags->precision > len ? (flags->precision - len) : len;
+	tmp = flags->precision > len ? (flags->precision - len) : 0;
 	if (flags->width >= (tmp + len) || flags->precision > flags->width)
 	{
 		if (flags->minus)

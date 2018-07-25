@@ -58,18 +58,35 @@ int		percent_executor(t_opt *flags)
 	return (i);
 }
 
+int		executor_2(t_opt *flags, va_list ap)
+{
+	int len;
+
+	len = 0;
+	if (flags->sp_type == 'p')
+		len = p_executor(flags, ap);
+	else if (flags->sp_type == 'S')
+		len = bs_executor(flags, ap);
+	else if (flags->sp_type == 'D')
+		len = bd_executor(flags, ap);
+	else if (flags->sp_type == 'O')
+		len = bo_executor(flags, ap);
+	return (len);
+}
+
 int		executor(t_opt *flags, va_list ap)
 {
 	int		len;
 
 	len = 0;
-	if (flags->sp_type == 'd' || flags->sp_type == 'i' ||
-		flags->sp_type == 'D')
+	if (flags->sp_type == 'd' || flags->sp_type == 'i')
 		len = did_executor(flags, ap);
 	else if (flags->sp_type == 's')
 		len = s_executor(flags, ap);
 	else if (flags->sp_type == 'c')
 		len = c_execute(flags, ap);
+	else if (flags->sp_type == 'C')
+		len = bc_execute(ap);
 	else if (flags->sp_type == '%')
 		len = percent_executor(flags);
 	else if (flags->sp_type == 'u')
@@ -78,5 +95,9 @@ int		executor(t_opt *flags, va_list ap)
 		len = bu_executor(flags, ap);
 	else if (flags->sp_type == 'o')
 		len = o_executor(flags, ap);
+	else if (flags->sp_type == 'x' || flags->sp_type == 'X')
+		len = x_executor(flags, ap);
+	else
+		len = executor_2(flags, ap);
 	return (len);
 }
