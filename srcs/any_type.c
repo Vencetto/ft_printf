@@ -1,48 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   c_execute.c                                        :+:      :+:    :+:   */
+/*   any_type.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vzomber <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/16 16:31:14 by vzomber           #+#    #+#             */
-/*   Updated: 2018/07/16 16:31:16 by vzomber          ###   ########.fr       */
+/*   Created: 2018/07/25 15:40:13 by vzomber           #+#    #+#             */
+/*   Updated: 2018/07/25 15:40:14 by vzomber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-int		c_execute(t_opt *flags, va_list ap)
+intmax_t	a_did_2_help(t_opt *flags)
 {
-	char	c;
-	int		len;
-	char	ch;
+	int			i;
 
-	len = 1;
-	ch = flags->zero ? '0' : ' ';
-	c = va_arg(ap, int);
-	if (flags->width)
-	{
-		if (flags->minus)
-		{
-			write(1, &c, 1);
-			ft_loop(flags->width - 1, ch);
-			return (flags->width);
-		}
-		else
-			 len += ft_loop(flags->width - 1, ch);
-	}
-	write(1, &c, 1);
-	return (len);
+	if (flags->zero)
+		i = ft_loop(flags->width, '0');
+	else
+		i = ft_loop(flags->width, ' ');
+	// write(1, flags->str, ft_strlen(flags->str));
+	return (i);
 }
 
-int		bc_execute(va_list ap)
+int		any_type(t_opt *flags)
 {
-	int	c;
-	int	len;
+	int len;
 
-	setlocale(LC_ALL, "");
-	c = va_arg(ap, int);
-	len = put_wchar(c);
+	len = 0;
+	if (flags->width)
+		return ((len = a_did_2_help(flags)));
 	return (len);
 }

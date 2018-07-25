@@ -123,7 +123,7 @@ intmax_t	did_0(t_opt *flags, intmax_t nb)
 
 int			ox_did(t_opt *flags, intmax_t nb, char *str)
 {
-	if (flags->sp_type == 'o' && flags->sharp && nb != 0)
+	if ((flags->sp_type == 'o' || flags->sp_type == 'O') && flags->sharp && nb != 0)
 	{
 		ft_putchar('0');
 		flags->width--;
@@ -144,6 +144,7 @@ int			ox_did(t_opt *flags, intmax_t nb, char *str)
 	if (flags->sp_type == 'p')
 	{
 		ft_putstr("0x");
+		flags->width -= 2;
 		return (2);
 	}
 	return (0);

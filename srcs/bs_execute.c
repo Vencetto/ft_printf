@@ -30,17 +30,21 @@ int		ft_unistrwrite(wchar_t *str, int count)
 
 int		bs_minus_2(wchar_t *str, t_opt *flags)
 {
-	int len;
+	int		len;
+	char	ch;
+	int		tmp;
 
-	len = 0;
+	ch = flags->zero ? '0' : ' ';
+	len = ft_unistrlen(str);
+	tmp = flags->precision < len ? flags->precision : len;
 	if (flags->minus)
 	{
 		len = ft_unistrwrite(str, flags->precision);
-		len += ft_loop(flags->width - len, ' ');
+		len += ft_loop(flags->width - tmp, ' ');
 	}
 	else
 	{
-		len = ft_loop(flags->width - flags->precision, ' ');
+		len = ft_loop(flags->width - tmp, ch);
 		len += ft_unistrwrite(str, flags->precision);
 	}
 	return (len);
@@ -49,7 +53,9 @@ int		bs_minus_2(wchar_t *str, t_opt *flags)
 int		bs_minus(wchar_t *str, t_opt *flags)
 {
 	int len;
+	char	ch;
 
+	ch = flags->zero ? '0' : ' ';
 	len = 0;
 	if (flags->minus)
 	{
@@ -59,26 +65,33 @@ int		bs_minus(wchar_t *str, t_opt *flags)
 	}
 	else
 	{
-		len = ft_loop(flags->width - (int)ft_unistrlen(str), ' ');
+		len = ft_loop(flags->width - (int)ft_unistrlen(str), ch);
 		ft_putunistr(str);
 		len += ft_unistrlen(str);
 	}
 	return (len);
 }
 
-int		bs_executor_2(wchar_t *str, t_opt *flags)
+int		bs_executor_2(wchar_t *str, t_opt *flags, int tmp)
 {
 	int len;
 
 	len = 0;
-	if (flags->precision && !flags->width)
+	if (flags->width && !flags->precision)
+	{
+		if (flags->width > tmp)
+			return ((len = bs_minus(str, flags)));
+		len = ft_putunistr(str);
+		return (len);
+	}
+	else if (flags->precision && !flags->width)
 	{
 		len = ft_unistrwrite(str, flags->precision);
 		return (len);
 	}
 	else if (flags->precision && flags->width)
 	{
-		if (flags->width > (int)ft_unistrlen(str))
+		if (flags->width > tmp)
 			return ((len += bs_minus_2(str, flags)));
 		len = ft_unistrwrite(str, flags->precision);
 		return (len);
@@ -92,8 +105,12 @@ int		bs_executor(t_opt *flags, va_list ap)
 {
 	int		len;
 	wchar_t	*str;
+	char	ch;
+	int		tmp;
+	int		f;
 
 	len = 0;
+	ch = flags->zero ? '0' : ' ';
 	str = va_arg(ap, wchar_t *);
 	if (str == NULL)
 	{
@@ -106,13 +123,8 @@ int		bs_executor(t_opt *flags, va_list ap)
 			len = ft_loop(flags->width, ' ');
 		return (len);
 	}
-	else if (flags->width && !flags->precision)
-	{
-		if (flags->width > (int)ft_unistrlen(str))
-			return ((len = bs_minus(str, flags)));
-		len = ft_putunistr(str);
-		return (len);
-	}
-	len = bs_executor_2(str, flags);
+	f = ft_unistrlen(str);
+	tmp = flags->precision < f ? flags->precision : f;
+	len = bs_executor_2(str, flags, tmp);
 	return (len);
 }

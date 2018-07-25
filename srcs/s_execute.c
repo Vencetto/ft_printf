@@ -44,17 +44,22 @@ int		ft_strwrite(char *str, int count)
 
 int		s_minus_2(char *str, t_opt *flags)
 {
-	int len;
+	int		len;
+	char	ch;
+	int		tmp;
 
-	len = 0;
+	ch = flags->zero ? '0' : ' ';
+	len = ft_strlen(str);
+	tmp = flags->precision < len ? flags->precision : len;
 	if (flags->minus)
 	{
 		len = ft_strwrite(str, flags->precision);
-		len += ft_loop(flags->width - len, ' ');
+		len += ft_loop(flags->width - tmp, ' ');
 	}
 	else
 	{
-		len = ft_loop(flags->width - flags->precision, ' ');
+		// printf("width: %d, prec: %d, tmp: %d, len: %d\n", flags->width, flags->precision, tmp, len);
+		len = ft_loop(flags->width - tmp, ch);
 		len += ft_strwrite(str, flags->precision);
 	}
 	return (len);
@@ -63,7 +68,9 @@ int		s_minus_2(char *str, t_opt *flags)
 int		s_minus(char *str, t_opt *flags)
 {
 	int len;
+	char	ch;
 
+	ch = flags->zero ? '0' : ' ';
 	len = 0;
 	if (flags->minus)
 	{
@@ -73,18 +80,25 @@ int		s_minus(char *str, t_opt *flags)
 	}
 	else
 	{
-		len = ft_loop(flags->width - (int)ft_strlen(str), ' ');
+		len = ft_loop(flags->width - (int)ft_strlen(str), ch);
 		write(1, str, ft_strlen(str));
 		len += ft_strlen(str);
 	}
 	return (len);
 }
 
-int		s_executor_2(char *str, t_opt *flags)
+int		s_executor_2(char *str, t_opt *flags, int tmp)
 {
 	int len;
 
 	len = 0;
+	if (flags->width && !flags->precision)
+	{
+		if (flags->width > tmp)
+			return ((len = s_minus(str, flags)));
+		write(1, str, ft_strlen(str));
+		return (len);
+	}
 	if (flags->precision && !flags->width)
 	{
 		len = ft_strwrite(str, flags->precision);
@@ -92,7 +106,7 @@ int		s_executor_2(char *str, t_opt *flags)
 	}
 	else if (flags->precision && flags->width)
 	{
-		if (flags->width > (int)ft_strlen(str))
+		if (flags->width > tmp)
 			return ((len += s_minus_2(str, flags)));
 		len = ft_strwrite(str, flags->precision);
 		return (len);
@@ -106,8 +120,12 @@ int		s_executor(t_opt *flags, va_list ap)
 {
 	int		len;
 	char	*str;
+	char	ch;
+	int		tmp;
+	int		f;
 
 	len = 0;
+	ch = flags->zero ? '0' : ' ';
 	str = va_arg(ap, char *);
 	if (str == NULL)
 	{
@@ -117,16 +135,11 @@ int		s_executor(t_opt *flags, va_list ap)
 	else if (ft_strlen(str) == 0)
 	{
 		if (flags->width)
-			len = ft_loop(flags->width, ' ');
+			len = ft_loop(flags->width, ch);
 		return (len);
 	}
-	else if (flags->width && !flags->precision)
-	{
-		if (flags->width > (int)ft_strlen(str))
-			return ((len = s_minus(str, flags)));
-		write(1, str, ft_strlen(str));
-		return (len);
-	}
-	len = s_executor_2(str, flags);
+	f = ft_strlen(str);
+	tmp = flags->precision < f ? flags->precision : f;
+	len = s_executor_2(str, flags, tmp);
 	return (len);
 }

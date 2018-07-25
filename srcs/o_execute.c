@@ -17,6 +17,7 @@ uintmax_t	take_arg_o(t_opt *flags, va_list ap)
 	uintmax_t	nb;
 
 	nb = 0;
+
 	if (!ft_strcmp(flags->modif, "h"))
 		nb = (unsigned short)va_arg(ap, int);
 	else if (!ft_strcmp(flags->modif, "hh"))
@@ -27,9 +28,11 @@ uintmax_t	take_arg_o(t_opt *flags, va_list ap)
 		nb = (unsigned long long)va_arg(ap, long long);
 	else if (!ft_strcmp(flags->modif, "z"))
 		nb = va_arg(ap, size_t);
+	else if (!ft_strcmp(flags->modif, "j"))
+		nb = (uintmax_t)va_arg(ap, intmax_t);
 	else
 		nb = (unsigned int)va_arg(ap, int);
-		// printf("here: %jd\n", nb);
+		// printf("here: %ju\n", nb);
 	return (nb);
 }
 
@@ -41,7 +44,7 @@ int		o_executor(t_opt *flags, va_list ap)
 
 	len = 0;
 	nb = take_arg_o(flags, ap);
-	str = ft_itoa_base(nb, 8);
+	str = ft_uitoa_base(nb, 8);
 	if (check_zero(flags, nb))
 		return (ft_crutch(flags));
 	if (if_check_sign(flags,nb) && flags->width > flags->precision)
@@ -66,7 +69,9 @@ int		bo_executor(t_opt *flags, va_list ap)
 
 	len = 0;
 	nb = va_arg(ap, long);
-	str = ft_itoa_base(nb, 8);
+	// printf("%ld\n", nb);
+	str = ft_uitoa_base(nb, 8);
+	// printf("%s\n", str);
 	if (x_check_zero(flags, str))
 		return (ft_crutch(flags));
 	// if (if_check_sign(flags,nb) && flags->width > flags->precision)

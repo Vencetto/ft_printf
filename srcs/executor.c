@@ -65,12 +65,14 @@ int		executor_2(t_opt *flags, va_list ap)
 	len = 0;
 	if (flags->sp_type == 'p')
 		len = p_executor(flags, ap);
-	else if (flags->sp_type == 'S')
+	else if (flags->sp_type == 'S' || (flags->sp_type == 's' && !ft_strcmp(flags->modif, "l")))
 		len = bs_executor(flags, ap);
 	else if (flags->sp_type == 'D')
 		len = bd_executor(flags, ap);
 	else if (flags->sp_type == 'O')
 		len = bo_executor(flags, ap);
+	else
+		len = any_type(flags);
 	return (len);
 }
 
@@ -81,11 +83,12 @@ int		executor(t_opt *flags, va_list ap)
 	len = 0;
 	if (flags->sp_type == 'd' || flags->sp_type == 'i')
 		len = did_executor(flags, ap);
-	else if (flags->sp_type == 's')
+	else if (flags->sp_type == 's' && ft_strcmp(flags->modif, "l"))
 		len = s_executor(flags, ap);
-	else if (flags->sp_type == 'c')
+	else if (flags->sp_type == 'c' && ft_strcmp(flags->modif, "l"))
 		len = c_execute(flags, ap);
-	else if (flags->sp_type == 'C')
+	else if (flags->sp_type == 'C' || 
+		(flags->sp_type == 'c' && !ft_strcmp(flags->modif, "l")))
 		len = bc_execute(ap);
 	else if (flags->sp_type == '%')
 		len = percent_executor(flags);

@@ -82,10 +82,13 @@ intmax_t	x_did_1_help(t_opt *flags, char *str)
 
 	ox = 0;
 	len = ft_strlen(str);
-	if (flags->sharp && ft_strcmp(str, "0"))
+	if ((flags->sharp && ft_strcmp(str, "0")) || flags->sp_type == 'p') 
 	{
+		// printf("width: %d\n", flags->width);
 		ox = ox_did(flags, ft_atoi(str), str);
-		// flags->width -= 2;
+		// if (flags->sp_type == 'p')
+			// flags->width -= 2;
+		// printf("width: %d\n", flags->width);
 	}
 	ft_putstr(str);
 	i = ft_loop(flags->width - len, ' ');
@@ -96,6 +99,7 @@ intmax_t	x_did_1(t_opt *flags, char *str, intmax_t nb)
 {
 	intmax_t	len;
 	int			i;
+	int			ox;
 
 	len = ft_strlen(str);
 	if (flags->width > len)
@@ -106,8 +110,9 @@ intmax_t	x_did_1(t_opt *flags, char *str, intmax_t nb)
 			i = x_did_2_help(flags, str, nb);
 		return (i);
 	}
+	ox = ox_did(flags, nb, str);
 	ft_putstr(str);
-	return (len);
+	return (len + ox);
 }
 
 intmax_t	x_did_2(t_opt *flags, char *str)

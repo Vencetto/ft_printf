@@ -16,18 +16,19 @@ int		p_executor(t_opt *flags, va_list ap)
 {
 	char		*str;
 	int			len;
+	intmax_t	nb;
 
 	len = 0;
-	str = ft_uitoa_base((uintptr_t)va_arg(ap, void *), 16);
-
-	// if (check_zero(flags, nb))
-	// 	return (ft_crutch(flags));
+	nb = (uintptr_t)va_arg(ap, void *);
+	str = ft_uitoa_base(nb, 16);
+	if (check_zero(flags, nb))
+		return (ft_crutch(flags));
 	// if (if_check_sign(flags,nb) && flags->width > flags->precision)
 	// 	flags->width--;
 	if (!flags->width && !flags->precision)
-		return ((len = x_did_0(flags, str, 1)));
+		return ((len = x_did_0(flags, str, nb)));
 	else if (flags->width && !flags->precision)
-		return ((len = x_did_1(flags, str, 1)));
+		return ((len = x_did_1(flags, str, nb)));
 	// else if (!flags->width && flags->precision)
 	// 	return ((len = did_2(flags, nb)));
 	// else if (flags->width && flags->precision)

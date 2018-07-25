@@ -24,6 +24,11 @@ int			check_zero(t_opt *flags, intmax_t nb)
 
 int			ft_crutch(t_opt *flags)
 {
+	if (flags->sp_type == 'p')
+	{
+		write(1, "0x", 2);
+		return (2);
+	}
 	if (flags->width)
 	{
 		ft_loop(flags->width, ' ');
