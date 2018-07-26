@@ -123,7 +123,7 @@ intmax_t	did_0(t_opt *flags, intmax_t nb)
 
 int			ox_did(t_opt *flags, intmax_t nb, char *str)
 {
-	if ((flags->sp_type == 'o' || flags->sp_type == 'O') && flags->sharp && nb != 0)
+	if ((flags->sp_type == 'o' || flags->sp_type == 'O') && flags->sharp && nb != 0 && !flags->precision)
 	{
 		ft_putchar('0');
 		flags->width--;
@@ -168,8 +168,8 @@ intmax_t	did_2_help(t_opt *flags, intmax_t nb)
 	}
 	else
 	{
-		if (flags->sp_type == 'o' && flags->sharp)
-			flags->width--;
+		// if (flags->sp_type == 'o' && flags->sharp)
+		// 	flags->width--;
 		i = ft_loop(flags->width - len, ' ');
 		ox = ox_did(flags, nb, NULL);
 		tmp = ft_check_sign(flags, nb);
@@ -203,7 +203,9 @@ intmax_t	did_1(t_opt *flags, intmax_t nb)
 {
 	intmax_t	len;
 	int			i;
+	int			ch;
 
+	ch = 0;
 	len = ft_len(nb, 10);
 	if (flags->width > len)
 	{
@@ -213,8 +215,9 @@ intmax_t	did_1(t_opt *flags, intmax_t nb)
 			i = did_2_help(flags, nb);
 		return (i);
 	}
+	ch = ft_check_sign(flags, nb);
 	ft_putnbr_m(nb);
-	return (len);
+	return (len + ch);
 }
 
 intmax_t	did_2(t_opt *flags, intmax_t nb)
@@ -288,8 +291,10 @@ intmax_t	did_3(t_opt *flags, intmax_t nb)
 	intmax_t	len;
 	int			i;
 	int			tmp;
+	int			ox;
 
 	i = 0;
+	ox = 0;
 	len = ft_len(nb, 10);
 	tmp = flags->precision > len ? (flags->precision - len) : 0;
 	if (flags->width >= (tmp + len) || flags->precision > flags->width)
@@ -300,6 +305,7 @@ intmax_t	did_3(t_opt *flags, intmax_t nb)
 			i = helper_did(flags, nb);
 		return (i);
 	}
+	ox += if_check_sign(flags, nb);
 	ft_putnbr(nb);
-	return (len);
+	return (len + ox);
 }

@@ -44,8 +44,8 @@ int		u_executor(t_opt *flags, va_list ap)
 
 	len = 0;
 	nb = take_arg_u(flags, ap);
-	// if (check_zero(flags, nb))
-	// 	return (ft_crutch(flags));
+	if (check_zero(flags, nb))
+		return (ft_crutch(flags));
 	// printf("nb: %jd\n", nb);
 	// if (if_check_sign(flags,nb) && flags->width > flags->precision)
 	// 	flags->width--;

@@ -29,10 +29,10 @@ int		p_executor(t_opt *flags, va_list ap)
 		return ((len = x_did_0(flags, str, nb)));
 	else if (flags->width && !flags->precision)
 		return ((len = x_did_1(flags, str, nb)));
-	// else if (!flags->width && flags->precision)
-	// 	return ((len = did_2(flags, nb)));
-	// else if (flags->width && flags->precision)
-	// 	return ((len = did_3(flags, nb)));
+	else if (!flags->width && flags->precision)
+		return ((len = x_did_2(flags, str)));
+	else if (flags->width && flags->precision)
+		return ((len = x_did_3(flags, str)));
 	ft_putstr("0x");
 	ft_putstr(str);
 	len = ft_strlen(str);

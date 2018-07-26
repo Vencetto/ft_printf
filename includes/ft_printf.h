@@ -60,7 +60,8 @@ int			s_minus(char *str, t_opt *flags);
 int			ft_loop(int count, char ch);
 int			ft_strwrite(char *str, int count);
 int			s_minus_2(char *str, t_opt *flags);
-int			s_executor_2(char *str, t_opt *flags, int tmp);
+int			s_executor_2(char *str, t_opt *flags);
+int			s_executor_3(char *str, t_opt *flags);
 intmax_t	did_1(t_opt *flags, intmax_t nb);
 intmax_t	did_2(t_opt *flags, intmax_t nb);
 intmax_t	did_3(t_opt *flags, intmax_t nb);
@@ -98,7 +99,8 @@ int			bc_execute(va_list ap);
 int			count_bytes(wchar_t c);
 int			put_wchar(wchar_t c);
 int			ft_unistrwrite(wchar_t *str, int count);
-int			bs_executor_2(wchar_t *str, t_opt *flags, int tmp);
+int			bs_executor_3(wchar_t *str, t_opt *flags);
+int			bs_executor_2(wchar_t *str, t_opt *flags);
 int			bs_executor(t_opt *flags, va_list ap);
 int			bs_minus_2(wchar_t *str, t_opt *flags);
 int			bs_minus(wchar_t *str, t_opt *flags);
@@ -109,5 +111,7 @@ void		show_structure(t_opt *flags);
 int			if_ox_did(t_opt *flags, intmax_t nb, char *str);
 int			any_type(t_opt *flags);
 intmax_t	a_did_2_help(t_opt *flags);
+int			ft_catch_exept(t_opt *flags);
+int			if_catch_exept(t_opt *flags);
 
 #endif

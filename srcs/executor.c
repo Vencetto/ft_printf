@@ -41,8 +41,10 @@ int		did_executor(t_opt *flags, va_list ap)
 int		percent_executor(t_opt *flags)
 {
 	int	i;
+	int	ch;
 
 	i = 1;
+	ch = flags->zero ? '0' : ' ';
 	if (flags->width)
 	{
 		if (flags->minus)
@@ -52,7 +54,7 @@ int		percent_executor(t_opt *flags)
 			return (i);
 		}
 		else
-			i += ft_loop(flags->width - 1, ' ');
+			i += ft_loop(flags->width - 1, ch);
 	}
 	write(1, "%", 1);
 	return (i);
