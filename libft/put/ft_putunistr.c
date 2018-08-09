@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy.c                                        :+:      :+:    :+:   */
+/*   ft_putunistr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vzomber <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/15 14:36:19 by vzomber           #+#    #+#             */
-/*   Updated: 2017/11/30 20:15:36 by vzomber          ###   ########.fr       */
+/*   Created: 2018/07/24 14:49:48 by vzomber           #+#    #+#             */
+/*   Updated: 2018/07/24 14:49:49 by vzomber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
-#include "stdio.h"
 
-char	*ft_strcpy(char *dst, const char *src)
+int		ft_putunistr(wchar_t *s)
 {
-	int i;
+	int	i;
+	int	len;
 
-	if (!dst && !src)
-		return (NULL);
 	i = 0;
-	while (src[i])
+	len = 0;
+	if (s == NULL)
+		return (0);
+	while (s[i])
 	{
-		dst[i] = src[i];
+		len += put_wchar(s[i]);
 		i++;
 	}
-	dst[i] = '\0';
-	return (dst);
+	return (len);
 }

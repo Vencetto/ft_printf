@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy.c                                        :+:      :+:    :+:   */
+/*   ft_unistrlen.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vzomber <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/15 14:36:19 by vzomber           #+#    #+#             */
-/*   Updated: 2017/11/30 20:15:36 by vzomber          ###   ########.fr       */
+/*   Created: 2018/07/24 15:36:57 by vzomber           #+#    #+#             */
+/*   Updated: 2018/07/24 15:37:00 by vzomber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
-#include "stdio.h"
 
-char	*ft_strcpy(char *dst, const char *src)
+size_t	ft_unistrlen(wchar_t *s)
 {
-	int i;
+	size_t	i;
+	int		len;
 
-	if (!dst && !src)
-		return (NULL);
 	i = 0;
-	while (src[i])
+	len = 0;
+	while (s[i])
 	{
-		dst[i] = src[i];
+		len += count_bytes(s[i]);
 		i++;
 	}
-	dst[i] = '\0';
-	return (dst);
+	return (len);
 }

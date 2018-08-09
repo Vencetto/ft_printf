@@ -12,6 +12,29 @@
 
 #include "../includes/ft_printf.h"
 
+int		if_unistrwrite(wchar_t *str, int count)
+{
+	int	i;
+	int	len;
+	int	tmp;
+
+	i = 0;
+	len = 0;
+	while (str[i] && count > 0)
+	{
+		tmp = count_bytes(str[i]);
+		if ((count - tmp) >= 0)
+		{
+			len += count_bytes(str[i]);
+			count -= tmp;
+		}
+		else
+			return (len);
+		i++;
+	}
+	return (len);
+}
+
 int		ft_unistrwrite(wchar_t *str, int count)
 {
 	int	i;
@@ -22,13 +45,11 @@ int		ft_unistrwrite(wchar_t *str, int count)
 	len = 0;
 	while (str[i] && count > 0)
 	{
-		tmp = 0;
 		tmp = count_bytes(str[i]);
-		if ((count - tmp) > 0)
+		if ((count - tmp) >= 0)
 		{
-			while (tmp--)
-				len += put_wchar(str[i++]);
-			count -= len;
+			len += put_wchar(str[i]);
+			count -= tmp;
 		}
 		i++;
 	}
@@ -39,27 +60,27 @@ int		bs_minus_2(wchar_t *str, t_opt *flags)
 {
 	int		len;
 	char	ch;
-	int		tmp;
+	int		posb;
 
 	ch = flags->zero ? '0' : ' ';
 	len = ft_unistrlen(str);
-	tmp = flags->precision < len ? flags->precision : len;
+	posb = if_unistrwrite(str, flags->precision);
 	if (flags->minus)
 	{
-		len = ft_unistrwrite(str, flags->precision);
-		len += ft_loop(flags->width - tmp, ' ');
+		len = ft_unistrwrite(str, posb);
+		len += ft_loop(flags->width - posb, ' ');
 	}
 	else
 	{
-		len = ft_loop(flags->width - tmp, ch);
-		len += ft_unistrwrite(str, flags->precision);
+		len = ft_loop(flags->width - posb, ch);
+		len += ft_unistrwrite(str, posb);
 	}
 	return (len);
 }
 
 int		bs_minus(wchar_t *str, t_opt *flags)
 {
-	int len;
+	int		len;
 	char	ch;
 
 	ch = flags->zero ? '0' : ' ';
@@ -118,7 +139,7 @@ int		bs_executor_2(wchar_t *str, t_opt *flags)
 		len = ft_putunistr(str);
 		return (len);
 	}
-	else if (flags->precision && !flags->width)//////////////////////////////////////////////////// !!! here !!!
+	else if (flags->precision && !flags->width)
 	{
 		len = ft_unistrwrite(str, flags->precision);
 		return (len);

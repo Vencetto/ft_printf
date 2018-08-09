@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy.c                                        :+:      :+:    :+:   */
+/*   ft_count_bytes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vzomber <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/15 14:36:19 by vzomber           #+#    #+#             */
-/*   Updated: 2017/11/30 20:15:36 by vzomber          ###   ########.fr       */
+/*   Created: 2018/07/24 16:11:37 by vzomber           #+#    #+#             */
+/*   Updated: 2018/07/24 16:11:38 by vzomber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
-#include "stdio.h"
 
-char	*ft_strcpy(char *dst, const char *src)
+int	count_bytes(wchar_t c)
 {
-	int i;
-
-	if (!dst && !src)
-		return (NULL);
-	i = 0;
-	while (src[i])
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (dst);
+	if (c <= 127)
+		return (1);
+	else if (c <= 2047)
+		return (2);
+	else if (c <= 65535)
+		return (3);
+	else
+		return (4);
 }

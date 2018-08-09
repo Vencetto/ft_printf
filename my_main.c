@@ -36,8 +36,17 @@ int	main(void)
 	// ft_printf("% d\n", 42);// " 42"
 	// ft_printf("%5d\n", -42);
 	//    printf("%5d\n", -42);
-	ft_printf("%0+5d\n", 42);
-	   printf("%0+5d\n", 42);
+	// ft_printf("%0+5d\n", 42);
+	//    printf("%0+5d\n", 42);
+
+	// printf("%");
+	// printf("% Zoooo");
+	   // printf("%");
+	// ft_printf("%");
+	   // printf("%");
+
+	// ft_printf("%5%");
+
 	// ft_printf("%+d\n", 42);// "+42"
 	// ft_printf("%+d\n", 0);// +0
 

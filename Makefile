@@ -12,10 +12,20 @@
 
 NAME = libftprintf.a
 
-SRC =	src/ft_printf.c \
-		src/put_into_struct.c \
-		src/additional.c \
-		src/d_execute.c 
+SRC =	srcs/ft_printf.c \
+		srcs/put_into_struct.c \
+		srcs/additional.c \
+		srcs/d_execute.c \
+		srcs/s_execute.c \
+		srcs/executor.c \
+		srcs/c_execute.c \
+		srcs/u_execute.c \
+		srcs/o_execute.c \
+		srcs/x_execute.c \
+		srcs/test.c \
+		srcs/p_execute.c \
+		srcs/bs_execute.c \
+		srcs/any_type.c
 
 OBJ =	*.o
 

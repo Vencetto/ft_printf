@@ -20,8 +20,8 @@ char		*ft_itoa_base(intmax_t nb, int base)
 
 	sign = 0;
 	len = ft_len(nb, base);
-	if (nb == -9223372036854775807 - 1)
-		return (ft_strdup("-9223372036854775808"));
+	if (nb < -9223372036854775807)
+		return (ft_itoa(nb));
 	if (!(str = ft_strnew(len)))
 		return (NULL);
 	if (nb < 0 && base == 10)

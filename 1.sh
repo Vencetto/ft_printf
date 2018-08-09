@@ -1,1 +1,2 @@
-gcc -Wall -Wextra -Werror libftprintf.a my_main.c
+gcc libftprintf.a my_main.c
+#-Wall -Wextra -Werror 

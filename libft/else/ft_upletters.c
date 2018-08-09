@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_upletters.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vzomber <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/10 18:48:06 by vzomber           #+#    #+#             */
-/*   Updated: 2018/01/10 18:48:08 by vzomber          ###   ########.fr       */
+/*   Created: 2018/07/21 16:15:14 by vzomber           #+#    #+#             */
+/*   Updated: 2018/07/21 16:15:17 by vzomber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "../libft.h"
 
-# define BUFF_SIZE 10
-# define CHECKER(x) if (!x) return (-1)
-# include "libft.h"
-
-int		get_next_line(int fd, char **line);
-#endif
+void	ft_upletters(char *str)
+{
+	while (*str)
+	{
+		if (*str >= 'a' && *str <= 'z')
+			*str = *str - 32;
+		str++;
+	}
+}

@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy.c                                        :+:      :+:    :+:   */
+/*   ft_uputnbr_m.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vzomber <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/15 14:36:19 by vzomber           #+#    #+#             */
-/*   Updated: 2017/11/30 20:15:36 by vzomber          ###   ########.fr       */
+/*   Created: 2018/07/22 14:16:47 by vzomber           #+#    #+#             */
+/*   Updated: 2018/07/22 14:16:48 by vzomber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
-#include "stdio.h"
 
-char	*ft_strcpy(char *dst, const char *src)
+void	ft_uputnbr_m(uintmax_t n)
 {
-	int i;
-
-	if (!dst && !src)
-		return (NULL);
-	i = 0;
-	while (src[i])
+	if (n > 9223372036854775807)
+		return (ft_uhuge_mzfk(n));
+	else if (n >= 10)
 	{
-		dst[i] = src[i];
-		i++;
+		ft_putnbr_fd(n / 10, 1);
+		ft_putchar_fd(n % 10 + '0', 1);
 	}
-	dst[i] = '\0';
-	return (dst);
+	else
+		ft_putchar_fd(n + '0', 1);
 }

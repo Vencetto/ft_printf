@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy.c                                        :+:      :+:    :+:   */
+/*   ft_huge_mzfk.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vzomber <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/15 14:36:19 by vzomber           #+#    #+#             */
-/*   Updated: 2017/11/30 20:15:36 by vzomber          ###   ########.fr       */
+/*   Created: 2018/07/21 21:20:17 by vzomber           #+#    #+#             */
+/*   Updated: 2018/07/21 21:20:18 by vzomber          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
-#include "stdio.h"
 
-char	*ft_strcpy(char *dst, const char *src)
+void	ft_huge_mzfk(intmax_t nb)
 {
-	int i;
+	intmax_t	res;
 
-	if (!dst && !src)
-		return (NULL);
-	i = 0;
-	while (src[i])
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (dst);
+	res = nb % 10000;
+	nb = nb / 10000;
+	ft_putnbr_m(nb);
+	ft_putnbr_m(res);
 }

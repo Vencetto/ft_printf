@@ -12,9 +12,9 @@
 
 #include "../libft.h"
 
-int		ft_len(int n, int base)
+intmax_t		ft_len(intmax_t n, int base)
 {
-	int	i;
+	intmax_t	i;
 
 	i = 1;
 	while (n /= base)

@@ -33,6 +33,7 @@ typedef struct	s_opt
 	int			point;
 	char		*modif;
 	char		sp_type;
+	char		rubsh;
 }				t_opt;
 
 int			ft_printf(const char *format, ...);
@@ -113,5 +114,6 @@ int			any_type(t_opt *flags);
 intmax_t	a_did_2_help(t_opt *flags);
 int			ft_catch_exept(t_opt *flags);
 int			if_catch_exept(t_opt *flags);
+int			no_spec(char c, t_opt *flags);
 
 #endif

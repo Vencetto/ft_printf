@@ -12,10 +12,10 @@
 
 #include "../libft.h"
 
-int		ft_atoi(const char *str)
+intmax_t		ft_atoi(const char *str)
 {
-	unsigned long	result;
-	int				i;
+	intmax_t		result;
+	intmax_t		i;
 	int				sign;
 
 	i = 0;
@@ -36,5 +36,5 @@ int		ft_atoi(const char *str)
 			return (0);
 		i++;
 	}
-	return ((int)result * sign);
+	return (result * sign);
 }

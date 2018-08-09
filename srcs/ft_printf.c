@@ -18,18 +18,12 @@ char	*search_helper(char *s, t_opt *flags)
 	{
 		if (*s == '.' || *(s + 1) == '.')
 			flags->point = 1;
-		// printf("\t1 s: %s\n", s);
 		if (*s >= '1' && *s <= '9')
 			s = put_width(s, flags);
-		// printf("\t2 s: %s\n", s);
 		if (*s == '.')
 			s = put_precision(s + 1, flags);
-		// printf("\t3 s: %s\n", s);
 		if (!(*(s + 1) >= '1' && *(s + 1) <= '9'))
-		{
-			// printf("must be here\n");
 			return (s);
-		}
 		s++;
 	}
 	return (s);
@@ -39,17 +33,22 @@ char	*search_for_flags(char *s, t_opt *flags)
 {
 	while (*s)
 	{
-		if (*s == ' ' || *s == '-' || *s == '+' || *s == '#' || *s == '0')
-			put_flags(*s, flags);
 		if (*s == '.' || (*s >= '1' && *s <= '9'))
 			s = search_helper(s, flags);
-		if (*s == 'h' | *s == 'l' || *s == 'j' || *s == 'z')
+		if (*s == ' ' || *s == '-' || *s == '+' || *s == '#' || *s == '0')
+			put_flags(*s, flags);
+		else if (*s == 'h' || *s == 'l' || *s == 'j' || *s == 'z')
 			(put_modificator(*s, *(s + 1), flags) ? s++ : 0);
-		if (*s == 's' || *s == 'S' || *s == 'p' || *s == 'd' || *s == 'D' ||
-			*s == 'i' || *s == 'o' || *s == 'O' || *s == 'u' || *s == 'U' ||
-			*s == 'x' || *s == 'X' || *s == 'c' || *s == 'C' || *s == '%')
+		else if (*s == 's' || *s == 'S' || *s == 'p' || *s == 'd' || *s == 'D' ||
+				*s == 'i' || *s == 'o' || *s == 'O' || *s == 'u' || *s == 'U' ||
+				*s == 'x' || *s == 'X' || *s == 'c' || *s == 'C' || *s == '%')
 		{
 			flags->sp_type = *s;
+			return (s);
+		}
+		else
+		{
+			flags->rubsh = *s;
 			return (s);
 		}
 		s++;
@@ -79,7 +78,6 @@ int		parser(va_list ap, char *str)
 		}
 		str++;
 	}
-	// system("leaks a.out");
 	return (i);
 }
 
