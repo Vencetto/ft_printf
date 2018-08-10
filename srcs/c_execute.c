@@ -30,7 +30,7 @@ int		c_execute(t_opt *flags, va_list ap)
 			return (flags->width);
 		}
 		else
-			 len += ft_loop(flags->width - 1, ch);
+			len += ft_loop(flags->width - 1, ch);
 	}
 	write(1, &c, 1);
 	return (len);
@@ -41,8 +41,10 @@ int		bc_execute(va_list ap)
 	int	c;
 	int	len;
 
-	setlocale(LC_ALL, "");
 	c = va_arg(ap, int);
-	len = put_wchar(c);
+	if (MB_CUR_MAX > 1)
+		len = put_wchar(c);
+	else
+		len = write(1, &c, 1);
 	return (len);
 }

@@ -22,10 +22,7 @@ uintmax_t	take_arg_u(t_opt *flags, va_list ap)
 	else if (!ft_strcmp(flags->modif, "hh"))
 		nb = (unsigned char)va_arg(ap, int);
 	else if (!ft_strcmp(flags->modif, "l"))
-	{
 		nb = (unsigned long)va_arg(ap, long);
-		 // printf("nb: %jd\n", nb);
-	}
 	else if (!ft_strcmp(flags->modif, "ll"))
 		nb = (unsigned long long)va_arg(ap, long long);
 	else if (!ft_strcmp(flags->modif, "j"))
@@ -46,9 +43,6 @@ int		u_executor(t_opt *flags, va_list ap)
 	nb = take_arg_u(flags, ap);
 	if (check_zero(flags, nb))
 		return (ft_crutch(flags));
-	// printf("nb: %jd\n", nb);
-	// if (if_check_sign(flags,nb) && flags->width > flags->precision)
-	// 	flags->width--;
 	if (!flags->width && !flags->precision)
 		return ((len = did_0(flags, nb)));
 	else if (flags->width && !flags->precision)
@@ -69,9 +63,6 @@ int		bu_executor(t_opt *flags, va_list ap)
 
 	len = 0;
 	nb = (unsigned long)va_arg(ap, long);
-	// printf("nb: %lu\n", nb);
-	// if (if_check_sign(flags,nb) && flags->width > flags->precision)
-	// 	flags->width--;
 	if (!flags->width && !flags->precision)
 		return ((len = did_0(flags, nb)));
 	else if (flags->width && !flags->precision)

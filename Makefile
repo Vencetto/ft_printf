@@ -16,15 +16,18 @@ SRC =	srcs/ft_printf.c \
 		srcs/put_into_struct.c \
 		srcs/additional.c \
 		srcs/d_execute.c \
+		srcs/d_execute_2.c \
+		srcs/d_execute_3.c \
 		srcs/s_execute.c \
 		srcs/executor.c \
 		srcs/c_execute.c \
 		srcs/u_execute.c \
 		srcs/o_execute.c \
 		srcs/x_execute.c \
-		srcs/test.c \
+		srcs/ox_funcs.c \
 		srcs/p_execute.c \
 		srcs/bs_execute.c \
+		srcs/bs_additional.c \
 		srcs/any_type.c
 
 OBJ =	*.o

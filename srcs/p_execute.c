@@ -23,8 +23,6 @@ int		p_executor(t_opt *flags, va_list ap)
 	str = ft_uitoa_base(nb, 16);
 	if (check_zero(flags, nb))
 		return (ft_crutch(flags));
-	// if (if_check_sign(flags,nb) && flags->width > flags->precision)
-	// 	flags->width--;
 	if (!flags->width && !flags->precision)
 		return ((len = x_did_0(flags, str, nb)));
 	else if (flags->width && !flags->precision)

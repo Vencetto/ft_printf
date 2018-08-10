@@ -21,7 +21,7 @@ int		did_executor(t_opt *flags, va_list ap)
 	nb = take_arg_d(flags, ap);
 	if (check_zero(flags, nb))
 		return (ft_crutch(flags));
-	if (if_check_sign(flags,nb) && flags->width > flags->precision)
+	if (if_check_sign(flags, nb) && flags->width > flags->precision)
 		flags->width--;
 	if (!flags->width && !flags->precision)
 		return ((len = did_0(flags, nb)));
@@ -67,7 +67,8 @@ int		executor_2(t_opt *flags, va_list ap)
 	len = 0;
 	if (flags->sp_type == 'p')
 		len = p_executor(flags, ap);
-	else if (flags->sp_type == 'S' || (flags->sp_type == 's' && !ft_strcmp(flags->modif, "l")))
+	else if (flags->sp_type == 'S' || (flags->sp_type == 's'
+		&& !ft_strcmp(flags->modif, "l")))
 		len = bs_executor(flags, ap);
 	else if (flags->sp_type == 'D')
 		len = bd_executor(flags, ap);
@@ -89,7 +90,7 @@ int		executor(t_opt *flags, va_list ap)
 		len = s_executor(flags, ap);
 	else if (flags->sp_type == 'c' && ft_strcmp(flags->modif, "l"))
 		len = c_execute(flags, ap);
-	else if (flags->sp_type == 'C' || 
+	else if (flags->sp_type == 'C' ||
 		(flags->sp_type == 'c' && !ft_strcmp(flags->modif, "l")))
 		len = bc_execute(ap);
 	else if (flags->sp_type == '%')

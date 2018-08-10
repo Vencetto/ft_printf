@@ -12,7 +12,7 @@
 
 #include "../includes/ft_printf.h"
 
-int		no_spec(char c, t_opt *flags)
+int			no_spec(char c, t_opt *flags)
 {
 	int		len;
 	char	ch;
@@ -28,7 +28,7 @@ int		no_spec(char c, t_opt *flags)
 			return (flags->width);
 		}
 		else
-			 len += ft_loop(flags->width - 1, ch);
+			len += ft_loop(flags->width - 1, ch);
 	}
 	write(1, &c, 1);
 	return (len);
@@ -36,17 +36,16 @@ int		no_spec(char c, t_opt *flags)
 
 intmax_t	a_did_2_help(t_opt *flags)
 {
-	int			i;
+	int		i;
 
 	if (flags->zero)
 		i = ft_loop(flags->width, '0');
 	else
 		i = ft_loop(flags->width, ' ');
-	// write(1, flags->str, ft_strlen(flags->str));
 	return (i);
 }
 
-int		any_type(t_opt *flags)
+int			any_type(t_opt *flags)
 {
 	int len;
 

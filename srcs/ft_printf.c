@@ -39,9 +39,9 @@ char	*search_for_flags(char *s, t_opt *flags)
 			put_flags(*s, flags);
 		else if (*s == 'h' || *s == 'l' || *s == 'j' || *s == 'z')
 			(put_modificator(*s, *(s + 1), flags) ? s++ : 0);
-		else if (*s == 's' || *s == 'S' || *s == 'p' || *s == 'd' || *s == 'D' ||
-				*s == 'i' || *s == 'o' || *s == 'O' || *s == 'u' || *s == 'U' ||
-				*s == 'x' || *s == 'X' || *s == 'c' || *s == 'C' || *s == '%')
+		else if (*s == 's' || *s == 'S' || *s == 'p' || *s == 'd' || *s == 'D'
+				|| *s == 'i' || *s == 'o' || *s == 'O' || *s == 'u' || *s == 'U'
+				|| *s == 'x' || *s == 'X' || *s == 'c' || *s == 'C' || *s == '%')
 		{
 			flags->sp_type = *s;
 			return (s);
@@ -69,7 +69,6 @@ int		parser(va_list ap, char *str)
 			set_all_zero(&flags);
 			str = search_for_flags(str + 1, &flags);
 			i += executor(&flags, ap);
-			// show_structure(&flags);
 		}
 		else
 		{

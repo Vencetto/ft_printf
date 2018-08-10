@@ -15,6 +15,7 @@
 int		put_wchar(wchar_t c)
 {
 	int len;
+
 	len = count_bytes(c);
 	if (len == 1)
 		ft_putchar(c);

@@ -47,8 +47,6 @@ int		x_executor(t_opt *flags, va_list ap)
 	str = take_arg_x(flags, ap);
 	if (x_check_zero(flags, str))
 		return (ft_crutch(flags));
-	// if (if_check_sign(flags, str) && flags->width > flags->precision)
-	// 	flags->width--;
 	if (!flags->width && !flags->precision)
 		return ((len = x_did_0(flags, str, 1)));
 	else if (flags->width && !flags->precision)

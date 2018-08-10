@@ -58,7 +58,6 @@ int		s_minus_2(char *str, t_opt *flags)
 	}
 	else
 	{
-		// printf("width: %d, prec: %d, tmp: %d, len: %d\n", flags->width, flags->precision, tmp, len);
 		len = ft_loop(flags->width - tmp, ch);
 		len += ft_strwrite(str, flags->precision);
 	}
