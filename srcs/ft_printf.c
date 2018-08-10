@@ -91,6 +91,8 @@ int		ft_printf(const char *format, ...)
 	{
 		if (checking((char *)format))
 			return (ft_strlen(format));
+		else if (!ft_strcmp(format, "%"))
+			return (0);
 		else
 		{
 			va_start(ap, format);
