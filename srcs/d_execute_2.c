@@ -55,9 +55,18 @@ int		ft_check_sign(t_opt *flags, intmax_t nb)
 	return (0);
 }
 
-int			ox_did(t_opt *flags, intmax_t nb, char *str)
+int		big_check(t_opt *flags, int nb)
 {
-	if ((flags->sp_type == 'o' || flags->sp_type == 'O') && flags->sharp && nb != 0 && !flags->precision)
+	if ((flags->sp_type == 'o' || flags->sp_type == 'O')
+		&& flags->sharp && nb != 0 && !flags->precision)
+		return (1);
+	else
+		return (0);
+}
+
+int		ox_did(t_opt *flags, intmax_t nb, char *str)
+{
+	if (big_check(flags, nb))
 	{
 		ft_putchar('0');
 		flags->width--;
@@ -83,4 +92,3 @@ int			ox_did(t_opt *flags, intmax_t nb, char *str)
 	}
 	return (0);
 }
-

@@ -114,4 +114,5 @@ int				ft_catch_exept(t_opt *flags);
 int				if_catch_exept(t_opt *flags);
 int				no_spec(char c, t_opt *flags);
 int				if_unistrwrite(wchar_t *str, int count);
+int				big_check(t_opt *flags, int nb);
 #endif

@@ -40,8 +40,8 @@ char	*search_for_flags(char *s, t_opt *flags)
 		else if (*s == 'h' || *s == 'l' || *s == 'j' || *s == 'z')
 			(put_modificator(*s, *(s + 1), flags) ? s++ : 0);
 		else if (*s == 's' || *s == 'S' || *s == 'p' || *s == 'd' || *s == 'D'
-				|| *s == 'i' || *s == 'o' || *s == 'O' || *s == 'u' || *s == 'U'
-				|| *s == 'x' || *s == 'X' || *s == 'c' || *s == 'C' || *s == '%')
+			|| *s == 'i' || *s == 'o' || *s == 'O' || *s == 'u' || *s == 'U'
+			|| *s == 'x' || *s == 'X' || *s == 'c' || *s == 'C' || *s == '%')
 		{
 			flags->sp_type = *s;
 			return (s);

@@ -12,7 +12,7 @@
 
 #include "../includes/ft_printf.h"
 
-uintmax_t	take_arg_u(t_opt *flags, va_list ap)
+uintmax_t		take_arg_u(t_opt *flags, va_list ap)
 {
 	uintmax_t	nb;
 
@@ -34,7 +34,7 @@ uintmax_t	take_arg_u(t_opt *flags, va_list ap)
 	return (nb);
 }
 
-int		u_executor(t_opt *flags, va_list ap)
+int				u_executor(t_opt *flags, va_list ap)
 {
 	uintmax_t	nb;
 	int			len;
@@ -56,7 +56,7 @@ int		u_executor(t_opt *flags, va_list ap)
 	return (len);
 }
 
-int		bu_executor(t_opt *flags, va_list ap)
+int				bu_executor(t_opt *flags, va_list ap)
 {
 	uintmax_t	nb;
 	int			len;

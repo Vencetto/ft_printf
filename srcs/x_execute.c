@@ -12,7 +12,7 @@
 
 #include "../includes/ft_printf.h"
 
-char		*take_arg_x(t_opt *flags, va_list ap)
+char			*take_arg_x(t_opt *flags, va_list ap)
 {
 	uintmax_t	nb;
 	char		*str;
@@ -38,7 +38,7 @@ char		*take_arg_x(t_opt *flags, va_list ap)
 	return (str);
 }
 
-int		x_executor(t_opt *flags, va_list ap)
+int				x_executor(t_opt *flags, va_list ap)
 {
 	char		*str;
 	int			len;

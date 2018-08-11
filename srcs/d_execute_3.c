@@ -12,7 +12,7 @@
 
 #include "../includes/ft_printf.h"
 
-intmax_t	helper_did(t_opt *flags, intmax_t nb)
+intmax_t		helper_did(t_opt *flags, intmax_t nb)
 {
 	intmax_t	len;
 	int			i;
@@ -41,7 +41,7 @@ intmax_t	helper_did(t_opt *flags, intmax_t nb)
 	return (i + ch);
 }
 
-intmax_t	helper_did_2(t_opt *flags, intmax_t nb)
+intmax_t		helper_did_2(t_opt *flags, intmax_t nb)
 {
 	intmax_t	len;
 	int			i;
@@ -59,7 +59,7 @@ intmax_t	helper_did_2(t_opt *flags, intmax_t nb)
 	return (i + ch);
 }
 
-intmax_t	did_3(t_opt *flags, intmax_t nb)
+intmax_t		did_3(t_opt *flags, intmax_t nb)
 {
 	intmax_t	len;
 	int			i;
@@ -83,7 +83,7 @@ intmax_t	did_3(t_opt *flags, intmax_t nb)
 	return (len + ox);
 }
 
-intmax_t	take_arg_d(t_opt *flags, va_list ap)
+intmax_t		take_arg_d(t_opt *flags, va_list ap)
 {
 	intmax_t	nb;
 
@@ -105,7 +105,7 @@ intmax_t	take_arg_d(t_opt *flags, va_list ap)
 	return (nb);
 }
 
-int		bd_executor(t_opt *flags, va_list ap)
+int				bd_executor(t_opt *flags, va_list ap)
 {
 	intmax_t	nb;
 	int			len;
@@ -114,7 +114,7 @@ int		bd_executor(t_opt *flags, va_list ap)
 	nb = va_arg(ap, long);
 	if (check_zero(flags, nb))
 		return (ft_crutch(flags));
-	if (if_check_sign(flags,nb) && flags->width > flags->precision)
+	if (if_check_sign(flags, nb) && flags->width > flags->precision)
 		flags->width--;
 	if (!flags->width && !flags->precision)
 		return ((len = did_0(flags, nb)));
